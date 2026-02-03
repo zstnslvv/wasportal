@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="Logo placeholder">
+  <rect width="160" height="160" rx="24" fill="#101b36"/>
+  <rect x="18" y="18" width="124" height="124" rx="20" fill="#0b1736" stroke="#3b7cff" stroke-width="4"/>
+  <path d="M52 104V56h20l8 16 8-16h20v48h-16V84l-12 22-12-22v20H52z" fill="#3b7cff"/>
+</svg>
