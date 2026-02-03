@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  wasportal:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/html
+    environment:
+      PHP_CLI_SERVER_WORKERS: 4
