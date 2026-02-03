@@ -1,8 +1,6 @@
 const root = document.documentElement;
 const body = document.body;
 const storedAccent = localStorage.getItem('accentColor');
-const storedTitle = localStorage.getItem('portalTitle');
-const storedAvatar = localStorage.getItem('portalAvatar');
 const storedContrast = localStorage.getItem('themeContrast') === 'true';
 const storedCompact = localStorage.getItem('themeCompact') === 'true';
 
@@ -17,20 +15,6 @@ if (storedContrast) {
 
 if (storedCompact) {
     body.classList.add('theme-compact');
-}
-
-const titleTarget = document.querySelector('[data-title]');
-if (titleTarget && storedTitle) {
-    titleTarget.textContent = storedTitle;
-}
-
-const avatarTarget = document.querySelector('[data-avatar]');
-if (avatarTarget && storedAvatar) {
-    avatarTarget.innerHTML = '';
-    const img = document.createElement('img');
-    img.src = storedAvatar;
-    img.alt = 'avatar';
-    avatarTarget.appendChild(img);
 }
 
 const themePicker = document.querySelector('[data-theme-picker]');
@@ -75,43 +59,6 @@ document.querySelectorAll('[data-toggle-theme]').forEach((button) => {
         }
     });
 });
-
-const profileForm = document.querySelector('[data-profile-form]');
-if (profileForm) {
-    const titleInput = profileForm.querySelector('input[name="portalTitle"]');
-    const avatarInput = profileForm.querySelector('input[name="portalAvatar"]');
-
-    if (titleInput && storedTitle) {
-        titleInput.value = storedTitle;
-    }
-    if (avatarInput && storedAvatar) {
-        avatarInput.value = storedAvatar;
-    }
-
-    profileForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const nextTitle = titleInput ? titleInput.value.trim() : '';
-        const nextAvatar = avatarInput ? avatarInput.value.trim() : '';
-
-        if (nextTitle) {
-            localStorage.setItem('portalTitle', nextTitle);
-            if (titleTarget) {
-                titleTarget.textContent = nextTitle;
-            }
-        }
-
-        if (nextAvatar) {
-            localStorage.setItem('portalAvatar', nextAvatar);
-            if (avatarTarget) {
-                avatarTarget.innerHTML = '';
-                const img = document.createElement('img');
-                img.src = nextAvatar;
-                img.alt = 'avatar';
-                avatarTarget.appendChild(img);
-            }
-        }
-    });
-}
 
 document.querySelectorAll('.nav-link').forEach((link) => {
     link.addEventListener('click', () => {

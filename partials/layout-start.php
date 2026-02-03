@@ -5,6 +5,27 @@ if (!isset($pageTitle)) {
 if (!isset($activePage)) {
     $activePage = '';
 }
+
+$settingsPath = __DIR__ . '/../data/settings.json';
+$portalTitle = 'WAS Portal';
+$portalLogo = null;
+
+if (file_exists($settingsPath)) {
+    $settingsData = json_decode(file_get_contents($settingsPath), true);
+    if (is_array($settingsData)) {
+        $portalTitle = $settingsData['portalTitle'] ?? $portalTitle;
+        $portalLogo = $settingsData['portalLogo'] ?? null;
+    }
+}
+
+$portalInitials = 'WP';
+if (is_string($portalTitle) && $portalTitle !== '') {
+    $cleanTitle = preg_replace('/\s+/', ' ', trim($portalTitle));
+    $parts = explode(' ', $cleanTitle);
+    $first = mb_substr($parts[0] ?? '', 0, 1, 'UTF-8');
+    $second = mb_substr($parts[1] ?? '', 0, 1, 'UTF-8');
+    $portalInitials = strtoupper($first . $second);
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -18,11 +39,15 @@ if (!isset($activePage)) {
 <div class="app-shell">
     <aside class="sidebar">
         <div class="brand" data-profile>
-            <div class="brand__avatar" data-avatar>
-                <span>WP</span>
+            <div class="brand__avatar">
+                <?php if ($portalLogo): ?>
+                    <img src="<?php echo htmlspecialchars($portalLogo, ENT_QUOTES); ?>" alt="logo">
+                <?php else: ?>
+                    <span><?php echo htmlspecialchars($portalInitials, ENT_QUOTES); ?></span>
+                <?php endif; ?>
             </div>
             <div class="brand__text">
-                <span class="brand__pixel" data-title>WAS Portal</span>
+                <span class="brand__pixel"><?php echo htmlspecialchars($portalTitle, ENT_QUOTES); ?></span>
                 <span class="brand__label">Secure Console</span>
             </div>
         </div>

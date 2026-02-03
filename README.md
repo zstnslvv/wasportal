@@ -20,7 +20,7 @@ http://localhost:8000/login.php
 1. Соберите и запустите сервис:
 
 ```bash
-docker compose up --build
+docker compose up -d --build
 ```
 
 2. Откройте в браузере:
