@@ -9,31 +9,35 @@ require __DIR__ . '/partials/layout-start.php';
         <h2>Схема работы приложения</h2>
         <div class="schema">
             <div class="schema-item">
-                <span class="schema-label">Наименование докером</span>
-                <span class="schema-value">wasportal-core</span>
+                <span class="schema-label">Наименование сервера</span>
+                <span class="schema-value"><?php echo htmlspecialchars(php_uname('n'), ENT_QUOTES); ?></span>
+            </div>
+            <div class="schema-item">
+                <span class="schema-label">Папка проекта</span>
+                <span class="schema-value"><?php echo htmlspecialchars(basename(__DIR__), ENT_QUOTES); ?></span>
             </div>
             <div class="schema-item">
                 <span class="schema-label">Время</span>
-                <span class="schema-value"><?php echo date('H:i'); ?></span>
-            </div>
-            <div class="schema-item">
-                <span class="schema-label">Место</span>
-                <span class="schema-value">RU-EKB-01</span>
+                <span class="schema-value"><?php echo date('H:i:s'); ?></span>
             </div>
             <div class="schema-item">
                 <span class="schema-label">Пользователь</span>
-                <span class="schema-value"><?php echo htmlspecialchars($_SESSION['user'] ?? 'admin', ENT_QUOTES); ?></span>
+                <span class="schema-value"><?php echo htmlspecialchars(get_current_user(), ENT_QUOTES); ?></span>
             </div>
         </div>
     </div>
     <div class="panel">
         <h2>Кастомизация ресурса</h2>
-        <p class="panel-note">Выберите акцент и портал запомнит ваш выбор.</p>
+        <p class="panel-note">Акцент, режим и плотность интерфейса сохраняются.</p>
         <div class="theme-picker" data-theme-picker>
             <button class="theme-swatch" type="button" data-accent="#3b7cff" aria-label="синий"></button>
             <button class="theme-swatch" type="button" data-accent="#57a0ff" aria-label="голубой"></button>
             <button class="theme-swatch" type="button" data-accent="#2b5fd8" aria-label="индиго"></button>
             <button class="theme-swatch" type="button" data-accent="#8ab8ff" aria-label="лед"></button>
+        </div>
+        <div class="toggle-row">
+            <button class="toggle-pill" type="button" data-toggle-theme="contrast">контраст</button>
+            <button class="toggle-pill" type="button" data-toggle-theme="compact">компакт</button>
         </div>
     </div>
     <div class="panel">

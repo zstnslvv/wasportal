@@ -17,9 +17,14 @@ if (!isset($activePage)) {
 <body>
 <div class="app-shell">
     <aside class="sidebar">
-        <div class="brand">
-            <span class="brand__pixel">WAS</span>
-            <span class="brand__label">Portal</span>
+        <div class="brand" data-profile>
+            <div class="brand__avatar" data-avatar>
+                <span>WP</span>
+            </div>
+            <div class="brand__text">
+                <span class="brand__pixel" data-title>WAS Portal</span>
+                <span class="brand__label">Secure Console</span>
+            </div>
         </div>
         <nav class="nav">
             <a class="nav-link<?php echo $activePage === 'home' ? ' is-active' : ''; ?>" href="/index.php" data-icon="home">
@@ -47,6 +52,10 @@ if (!isset($activePage)) {
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm9 4-2.2.8.4 2.3-2 1.2-1.5-1.8-2 .8-1-2.1-2.2-.1-1 2.1-2-.8-1.5 1.8-2-1.2.4-2.3L3 12l2.2-.8-.4-2.3 2-1.2 1.5 1.8 2-.8 1-2.1 2.2.1 1 2.1 2-.8 1.5-1.8 2 1.2-.4 2.3z"/></svg>
                     <span>профиль</span>
                 </a>
+                <a class="nav-link<?php echo $activePage === 'integrations' ? ' is-active' : ''; ?>" href="/integrations.php" data-icon="integrations">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h4v4H7zM13 13h4v4h-4zM13 7h4v4h-4zM7 13h4v4H7z"/></svg>
+                    <span>интеграции</span>
+                </a>
             </div>
             <button class="nav-toggle" type="button" data-toggle="admin">
                 <span class="nav-toggle__label">администрирование</span>
@@ -56,6 +65,22 @@ if (!isset($activePage)) {
                 <a class="nav-link<?php echo $activePage === 'admin' ? ' is-active' : ''; ?>" href="/admin.php" data-icon="admin">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-3z"/></svg>
                     <span>доступы</span>
+                </a>
+                <a class="nav-link<?php echo $activePage === 'reports' ? ' is-active' : ''; ?>" href="/reports.php" data-icon="reports">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6zM8 7h8M8 11h8M8 15h5"/></svg>
+                    <span>отчеты</span>
+                </a>
+                <a class="nav-link<?php echo $activePage === 'stats' ? ' is-active' : ''; ?>" href="/statistics.php" data-icon="stats">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V9m7 10V5m7 14v-6"/></svg>
+                    <span>статистика</span>
+                </a>
+                <a class="nav-link<?php echo $activePage === 'ldap' ? ' is-active' : ''; ?>" href="/ldap.php" data-icon="ldap">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                    <span>ldap</span>
+                </a>
+                <a class="nav-link<?php echo $activePage === 'smtp' ? ' is-active' : ''; ?>" href="/smtp.php" data-icon="smtp">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 5 8-5"/></svg>
+                    <span>smtp</span>
                 </a>
             </div>
         </nav>

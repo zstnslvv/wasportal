@@ -39,16 +39,47 @@ body {
 }
 
 .brand {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 12px;
+    align-items: center;
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 2px;
 }
 
+.brand__avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--accent-soft);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.brand__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.brand__avatar span {
+    font-size: 14px;
+    color: var(--accent);
+}
+
+.brand__text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
 .brand__pixel {
-    font-size: 24px;
+    font-size: 18px;
     padding: 6px 10px;
     background: var(--accent-soft);
     border: 2px solid var(--accent);
@@ -57,8 +88,9 @@ body {
 }
 
 .brand__label {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--muted);
+    letter-spacing: 3px;
 }
 
 .nav {
@@ -237,6 +269,7 @@ body {
 .theme-picker {
     display: flex;
     gap: 12px;
+    margin-bottom: 12px;
 }
 
 .theme-swatch {
@@ -258,6 +291,30 @@ body {
     display: flex;
     gap: 12px;
     margin-top: 16px;
+}
+
+.toggle-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.toggle-pill {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--panel-dark);
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.toggle-pill.is-active {
+    color: #fff;
+    border-color: var(--accent);
+    background: var(--accent-soft);
 }
 
 .icon-button {
@@ -351,6 +408,46 @@ body {
     border-radius: 8px;
     padding: 10px 12px;
     color: var(--text);
+}
+
+.settings-form {
+    margin-top: 16px;
+    display: grid;
+    gap: 14px;
+}
+
+.settings-form label {
+    font-size: 12px;
+    color: var(--muted);
+    display: grid;
+    gap: 6px;
+}
+
+.settings-form input {
+    background: #0b1736;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--text);
+}
+
+body.theme-contrast {
+    --panel: #0a1326;
+    --panel-dark: #060e20;
+    --border: rgba(120, 160, 230, 0.6);
+    background: linear-gradient(135deg, #050b1c, #0b1430 60%, #050b20);
+}
+
+body.theme-compact .sidebar {
+    padding: 18px;
+}
+
+body.theme-compact .content {
+    padding: 24px 28px;
+}
+
+body.theme-compact .panel {
+    padding: 16px;
 }
 
 .primary-btn {
