@@ -15,6 +15,20 @@ php -S 0.0.0.0:8000 -t .
 http://localhost:8000/login.php
 ```
 
+## Запуск через Docker Compose
+
+1. Соберите и запустите сервис:
+
+```bash
+docker compose up --build
+```
+
+2. Откройте в браузере:
+
+```
+http://localhost:8000/login.php
+```
+
 ## Доступ
 
 - Логин: `admin`

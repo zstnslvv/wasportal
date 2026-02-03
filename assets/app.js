@@ -3,7 +3,6 @@ const body = document.body;
 const storedAccent = localStorage.getItem('accentColor');
 const storedTitle = localStorage.getItem('portalTitle');
 const storedAvatar = localStorage.getItem('portalAvatar');
-const storedLogo = localStorage.getItem('portalLogo') || storedAvatar;
 const storedContrast = localStorage.getItem('themeContrast') === 'true';
 const storedCompact = localStorage.getItem('themeCompact') === 'true';
 
@@ -26,11 +25,11 @@ if (titleTarget && storedTitle) {
 }
 
 const avatarTarget = document.querySelector('[data-avatar]');
-if (avatarTarget && storedLogo) {
+if (avatarTarget && storedAvatar) {
     avatarTarget.innerHTML = '';
     const img = document.createElement('img');
-    img.src = storedLogo;
-    img.alt = 'logo';
+    img.src = storedAvatar;
+    img.alt = 'avatar';
     avatarTarget.appendChild(img);
 }
 
@@ -80,14 +79,19 @@ document.querySelectorAll('[data-toggle-theme]').forEach((button) => {
 const profileForm = document.querySelector('[data-profile-form]');
 if (profileForm) {
     const titleInput = profileForm.querySelector('input[name="portalTitle"]');
+    const avatarInput = profileForm.querySelector('input[name="portalAvatar"]');
 
     if (titleInput && storedTitle) {
         titleInput.value = storedTitle;
+    }
+    if (avatarInput && storedAvatar) {
+        avatarInput.value = storedAvatar;
     }
 
     profileForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const nextTitle = titleInput ? titleInput.value.trim() : '';
+        const nextAvatar = avatarInput ? avatarInput.value.trim() : '';
 
         if (nextTitle) {
             localStorage.setItem('portalTitle', nextTitle);
@@ -95,180 +99,17 @@ if (profileForm) {
                 titleTarget.textContent = nextTitle;
             }
         }
-    });
-}
 
-const logoUploader = document.querySelector('[data-logo-uploader]');
-if (logoUploader) {
-    const input = logoUploader.querySelector('[data-logo-input]');
-    const preview = logoUploader.querySelector('[data-logo-preview] img');
-    const feedback = logoUploader.querySelector('[data-logo-feedback]');
-    const saveButton = logoUploader.querySelector('[data-logo-save]');
-    const resetButton = logoUploader.querySelector('[data-logo-reset]');
-    let cropper = null;
-    let currentObjectUrl = null;
-
-    const showFeedback = (message, isError = false) => {
-        if (!feedback) {
-            return;
-        }
-        feedback.textContent = message;
-        feedback.classList.toggle('form-feedback--error', isError);
-        feedback.classList.toggle('form-feedback--success', !isError);
-    };
-
-    const clearFeedback = () => {
-        if (feedback) {
-            feedback.textContent = '';
-            feedback.classList.remove('form-feedback--error', 'form-feedback--success');
-        }
-    };
-
-    const destroyCropper = () => {
-        if (cropper) {
-            cropper.destroy();
-            cropper = null;
-        }
-    };
-
-    const setAvatar = (url) => {
-        if (!avatarTarget) {
-            return;
-        }
-        avatarTarget.innerHTML = '';
-        const img = document.createElement('img');
-        img.src = url;
-        img.alt = 'logo';
-        avatarTarget.appendChild(img);
-    };
-
-    if (storedLogo && preview) {
-        preview.src = storedLogo;
-    }
-
-    input?.addEventListener('change', () => {
-        clearFeedback();
-        const file = input.files?.[0];
-        if (!file) {
-            return;
-        }
-        if (!['image/png', 'image/jpeg'].includes(file.type)) {
-            showFeedback('Загрузите PNG или JPG файл.', true);
-            input.value = '';
-            return;
-        }
-        if (currentObjectUrl) {
-            URL.revokeObjectURL(currentObjectUrl);
-        }
-        currentObjectUrl = URL.createObjectURL(file);
-        if (preview) {
-            preview.src = currentObjectUrl;
-        }
-        destroyCropper();
-        cropper = new Cropper(preview, {
-            aspectRatio: 1,
-            viewMode: 1,
-            dragMode: 'move',
-            autoCropArea: 1,
-        });
-    });
-
-    saveButton?.addEventListener('click', async () => {
-        clearFeedback();
-        if (!cropper) {
-            showFeedback('Сначала выберите изображение.', true);
-            return;
-        }
-        const canvas = cropper.getCroppedCanvas({ width: 256, height: 256 });
-        if (!canvas) {
-            showFeedback('Не удалось подготовить изображение.', true);
-            return;
-        }
-        canvas.toBlob(async (blob) => {
-            if (!blob) {
-                showFeedback('Не удалось подготовить изображение.', true);
-                return;
+        if (nextAvatar) {
+            localStorage.setItem('portalAvatar', nextAvatar);
+            if (avatarTarget) {
+                avatarTarget.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = nextAvatar;
+                img.alt = 'avatar';
+                avatarTarget.appendChild(img);
             }
-            const formData = new FormData();
-            formData.append('logo', blob, 'logo.png');
-            try {
-                const response = await fetch('/upload-logo.php', {
-                    method: 'POST',
-                    body: formData,
-                });
-                if (!response.ok) {
-                    throw new Error('upload failed');
-                }
-                const data = await response.json();
-                if (!data?.ok || !data?.url) {
-                    throw new Error('invalid response');
-                }
-                localStorage.setItem('portalLogo', data.url);
-                setAvatar(data.url);
-                if (preview) {
-                    preview.src = data.url;
-                }
-                showFeedback('Логотип обновлён.');
-            } catch (error) {
-                showFeedback('Не удалось загрузить логотип.', true);
-            }
-        }, 'image/png');
-    });
-
-    resetButton?.addEventListener('click', () => {
-        clearFeedback();
-        input.value = '';
-        destroyCropper();
-        if (preview) {
-            preview.src = '/assets/logo-placeholder.svg';
         }
-        localStorage.removeItem('portalLogo');
-        if (storedAvatar) {
-            localStorage.removeItem('portalAvatar');
-        }
-        if (avatarTarget) {
-            avatarTarget.innerHTML = '<span>WP</span>';
-        }
-    });
-}
-
-const usersForm = document.querySelector('[data-users-form]');
-if (usersForm) {
-    const feedback = usersForm.querySelector('[data-users-feedback]');
-    const loginInput = usersForm.querySelector('input[name="login"]');
-    const passwordInput = usersForm.querySelector('input[name="password"]');
-    const confirmInput = usersForm.querySelector('input[name="confirmPassword"]');
-    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{16}$/;
-
-    const showUsersFeedback = (message, isError = false) => {
-        if (!feedback) {
-            return;
-        }
-        feedback.textContent = message;
-        feedback.classList.toggle('form-feedback--error', isError);
-        feedback.classList.toggle('form-feedback--success', !isError);
-    };
-
-    usersForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const login = loginInput?.value.trim() || '';
-        const password = passwordInput?.value || '';
-        const confirm = confirmInput?.value || '';
-
-        if (!login) {
-            showUsersFeedback('Login обязателен.', true);
-            return;
-        }
-        if (!passwordPattern.test(password)) {
-            showUsersFeedback('Пароль должен быть длиной 16 символов и содержать буквы, цифры и спецсимволы.', true);
-            return;
-        }
-        if (password !== confirm) {
-            showUsersFeedback('Пароли не совпадают.', true);
-            return;
-        }
-        showUsersFeedback('Пользователь подготовлен к созданию. Назначение ролей будет доступно позже.');
-        usersForm.reset();
     });
 }
 
