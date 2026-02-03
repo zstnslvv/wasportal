@@ -13,6 +13,7 @@ if (!isset($activePage)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($pageTitle, ENT_QUOTES); ?></title>
     <link rel="stylesheet" href="/assets/styles.css">
+    <?php if (!empty($extraHead)) { echo $extraHead; } ?>
 </head>
 <body>
 <div class="app-shell">
@@ -65,6 +66,10 @@ if (!isset($activePage)) {
                 <a class="nav-link<?php echo $activePage === 'admin' ? ' is-active' : ''; ?>" href="/admin.php" data-icon="admin">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-3z"/></svg>
                     <span>доступы</span>
+                </a>
+                <a class="nav-link<?php echo $activePage === 'admin-users' ? ' is-active' : ''; ?>" href="/users.php" data-icon="users">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0zm-10 9a6 6 0 0 1 12 0v1H6z"/></svg>
+                    <span>пользователи</span>
                 </a>
                 <a class="nav-link<?php echo $activePage === 'reports' ? ' is-active' : ''; ?>" href="/reports.php" data-icon="reports">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6zM8 7h8M8 11h8M8 15h5"/></svg>
