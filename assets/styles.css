@@ -444,6 +444,29 @@ body {
     font-size: 11px;
 }
 
+.icon-btn {
+    border: 1px solid var(--border);
+    background: var(--panel-dark);
+    color: var(--text);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+
+.icon-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.icon-btn--danger {
+    color: #ffb2b2;
+    border-color: rgba(255, 120, 120, 0.4);
+}
+
 .table-toolbar {
     display: flex;
     flex-wrap: wrap;
@@ -509,6 +532,10 @@ body {
 
 .data-table tbody tr:hover {
     background: rgba(10, 20, 45, 0.35);
+}
+
+.data-table tbody tr.is-selected {
+    background: rgba(59, 124, 255, 0.25);
 }
 
 .table-stack {

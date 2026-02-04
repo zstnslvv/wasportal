@@ -41,8 +41,12 @@ require __DIR__ . '/partials/layout-start.php';
                 <p class="table-card__meta"></p>
             </div>
             <div class="table-card__actions">
-                <button class="btn btn-secondary btn-xs table-card__move" type="button">Переместить</button>
-                <button class="btn btn-danger btn-xs table-card__delete" type="button">Удалить таблицу</button>
+                <button class="icon-btn table-card__move" type="button" aria-label="Переместить таблицу">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 6 6h2v5H3V9l-3 3 3 3v-2h5v5H6l3 3 3-3h-2v-5h5v2l3-3-3-3v2h-5V6h2z"/></svg>
+                </button>
+                <button class="icon-btn icon-btn--danger table-card__delete" type="button" aria-label="Удалить таблицу">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                </button>
             </div>
         </div>
         <div class="table-toolbar">
@@ -97,13 +101,28 @@ require __DIR__ . '/partials/layout-start.php';
         };
 
         const extractIps = () => {
-            const raw = `${singleInput.value}\n${bulkInput.value}`;
-            const ipv4Matches = raw.match(ipv4Regex) || [];
-            const ipv6Matches = raw.match(ipv6Regex) || [];
-            const all = [...ipv4Matches, ...ipv6Matches]
+            const singleRaw = singleInput.value;
+            const bulkRaw = bulkInput.value;
+            const singleMatches = [
+                ...(singleRaw.match(ipv4Regex) || []),
+                ...(singleRaw.match(ipv6Regex) || [])
+            ]
                 .map((item) => item.trim())
                 .filter((item) => item.length > 0);
-            return [...new Set(all)];
+
+            if (singleMatches.length > 1) {
+                return { error: 'Поле "Один IP" должно содержать только один адрес.' };
+            }
+
+            const bulkMatches = [
+                ...(bulkRaw.match(ipv4Regex) || []),
+                ...(bulkRaw.match(ipv6Regex) || [])
+            ]
+                .map((item) => item.trim())
+                .filter((item) => item.length > 0);
+
+            const all = [...singleMatches, ...bulkMatches];
+            return { ips: [...new Set(all)] };
         };
 
         const createCell = (text = '', editable = true) => {
@@ -235,12 +254,15 @@ require __DIR__ . '/partials/layout-start.php';
         const createTableCard = (tableId, results) => {
             const card = tableTemplate.content.firstElementChild.cloneNode(true);
             const meta = card.querySelector('.table-card__meta');
+            const title = card.querySelector('.table-card__title');
             const tbody = card.querySelector('tbody');
             const searchInput = card.querySelector('input[type="search"]');
             const deleteButton = card.querySelector('.table-card__delete');
             const moveHandle = card.querySelector('.table-card__move');
 
             card.dataset.tableId = tableId;
+            const order = tableStack.querySelectorAll('.table-card').length + 1;
+            title.textContent = `Результаты #${order}`;
             meta.textContent = `Создано: ${new Date().toLocaleString('ru-RU')}. Адресов: ${results.length}.`;
 
             results.forEach((row) => {
@@ -290,16 +312,35 @@ require __DIR__ . '/partials/layout-start.php';
                 }
             });
 
-            moveHandle.addEventListener('mousedown', (event) => {
-                event.preventDefault();
+            moveHandle.addEventListener('mousedown', () => {
+                card.dataset.allowDrag = 'true';
+            });
+            moveHandle.addEventListener('mouseup', () => {
+                card.dataset.allowDrag = '';
+            });
+            document.addEventListener('mouseup', () => {
+                card.dataset.allowDrag = '';
             });
 
-            card.addEventListener('dragstart', () => {
+            card.addEventListener('dragstart', (event) => {
+                if (card.dataset.allowDrag !== 'true') {
+                    event.preventDefault();
+                    return;
+                }
                 card.classList.add('is-dragging');
             });
 
             card.addEventListener('dragend', () => {
                 card.classList.remove('is-dragging');
+                card.dataset.allowDrag = '';
+            });
+
+            tbody.addEventListener('click', (event) => {
+                const row = event.target.closest('tr');
+                if (!row) {
+                    return;
+                }
+                row.classList.toggle('is-selected');
             });
 
             bindSortHandlers(card);
@@ -322,7 +363,12 @@ require __DIR__ . '/partials/layout-start.php';
         });
 
         resolveButton.addEventListener('click', async () => {
-            const ips = extractIps();
+            const extracted = extractIps();
+            if (extracted.error) {
+                showMessage(extracted.error, 'form-error');
+                return;
+            }
+            const ips = extracted.ips || [];
             if (!ips.length) {
                 showMessage('Добавьте хотя бы один IP-адрес.', 'form-error');
                 return;
