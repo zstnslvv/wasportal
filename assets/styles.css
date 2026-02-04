@@ -537,6 +537,29 @@ body {
     overflow-x: auto;
 }
 
+.table-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.page-btn {
+    border: 1px solid var(--border);
+    background: var(--panel-dark);
+    color: var(--text);
+    padding: 4px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.page-btn.is-active {
+    border-color: var(--accent);
+    color: #fff;
+    background: var(--accent-soft);
+}
+
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -558,9 +581,14 @@ body {
     color: var(--muted);
     background: rgba(10, 20, 40, 0.6);
     letter-spacing: 0.6px;
-    display: flex;
+    white-space: nowrap;
+}
+
+.header-wrap {
+    display: inline-flex;
     align-items: center;
     gap: 6px;
+    white-space: nowrap;
 }
 
 .data-table tbody tr:hover {

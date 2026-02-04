@@ -74,58 +74,76 @@ require __DIR__ . '/partials/layout-start.php';
                 <thead>
                 <tr>
                     <th data-sortable>
-                        <button class="sort-btn" type="button" aria-label="Сортировать по IP">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
-                        </button>
-                        <span class="header-label" contenteditable="true">IP</span>
+                        <span class="header-wrap">
+                            <button class="sort-btn" type="button" aria-label="Сортировать по IP">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                            </button>
+                            <span class="header-label" contenteditable="true">IP</span>
+                        </span>
                     </th>
                     <th data-sortable>
-                        <button class="sort-btn" type="button" aria-label="Сортировать по домену">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
-                        </button>
-                        <span class="header-label" contenteditable="true">Домен</span>
+                        <span class="header-wrap">
+                            <button class="sort-btn" type="button" aria-label="Сортировать по домену">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                            </button>
+                            <span class="header-label" contenteditable="true">Домен</span>
+                        </span>
                     </th>
                     <th data-sortable>
-                        <button class="sort-btn" type="button" aria-label="Сортировать по стране">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
-                        </button>
-                        <span class="header-label" contenteditable="true">Страна</span>
+                        <span class="header-wrap">
+                            <button class="sort-btn" type="button" aria-label="Сортировать по стране">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                            </button>
+                            <span class="header-label" contenteditable="true">Страна</span>
+                        </span>
                     </th>
                     <th data-sortable>
-                        <button class="sort-btn" type="button" aria-label="Сортировать по региону">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
-                        </button>
-                        <span class="header-label" contenteditable="true">Регион</span>
+                        <span class="header-wrap">
+                            <button class="sort-btn" type="button" aria-label="Сортировать по региону">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                            </button>
+                            <span class="header-label" contenteditable="true">Регион</span>
+                        </span>
                     </th>
                     <th data-sortable>
-                        <button class="sort-btn" type="button" aria-label="Сортировать по городу">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
-                        </button>
-                        <span class="header-label" contenteditable="true">Город</span>
+                        <span class="header-wrap">
+                            <button class="sort-btn" type="button" aria-label="Сортировать по городу">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                            </button>
+                            <span class="header-label" contenteditable="true">Город</span>
+                        </span>
                     </th>
                     <th data-sortable>
-                        <button class="sort-btn" type="button" aria-label="Сортировать по провайдеру">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
-                        </button>
-                        <span class="header-label" contenteditable="true">Провайдер</span>
+                        <span class="header-wrap">
+                            <button class="sort-btn" type="button" aria-label="Сортировать по провайдеру">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                            </button>
+                            <span class="header-label" contenteditable="true">Провайдер</span>
+                        </span>
                     </th>
                     <th data-sortable>
-                        <button class="sort-btn" type="button" aria-label="Сортировать по организации">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
-                        </button>
-                        <span class="header-label" contenteditable="true">Организация</span>
+                        <span class="header-wrap">
+                            <button class="sort-btn" type="button" aria-label="Сортировать по организации">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                            </button>
+                            <span class="header-label" contenteditable="true">Организация</span>
+                        </span>
                     </th>
                     <th data-sortable>
-                        <button class="sort-btn" type="button" aria-label="Сортировать по ASN">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
-                        </button>
-                        <span class="header-label" contenteditable="true">ASN</span>
+                        <span class="header-wrap">
+                            <button class="sort-btn" type="button" aria-label="Сортировать по ASN">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                            </button>
+                            <span class="header-label" contenteditable="true">ASN</span>
+                        </span>
                     </th>
                     <th data-sortable>
-                        <button class="sort-btn" type="button" aria-label="Сортировать по статусу">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
-                        </button>
-                        <span class="header-label" contenteditable="true">Статус</span>
+                        <span class="header-wrap">
+                            <button class="sort-btn" type="button" aria-label="Сортировать по статусу">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                            </button>
+                            <span class="header-label" contenteditable="true">Статус</span>
+                        </span>
                     </th>
                     <th>Действия</th>
                 </tr>
@@ -133,6 +151,7 @@ require __DIR__ . '/partials/layout-start.php';
                 <tbody></tbody>
             </table>
         </div>
+        <div class="table-pagination" aria-label="Навигация по таблице"></div>
     </article>
 </template>
 <script>
@@ -178,23 +197,35 @@ require __DIR__ . '/partials/layout-start.php';
             return { ips: [...new Set(all)] };
         };
 
-        const createCell = (text = '', editable = true) => {
+        const createRowId = () => `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+        const createCell = (text = '', editable = true, rowId = null, colIndex = null, state = null) => {
             const cell = document.createElement('td');
             if (editable) {
                 cell.setAttribute('contenteditable', 'true');
             }
             cell.textContent = text;
+            if (editable && state && rowId !== null && colIndex !== null) {
+                cell.addEventListener('input', () => {
+                    const row = state.rows.find((item) => item.id === rowId);
+                    if (row) {
+                        row.cells[colIndex] = cell.textContent.trim();
+                    }
+                });
+            }
             return cell;
         };
 
-        const createActionCell = () => {
+        const createActionCell = (rowId, card) => {
             const cell = document.createElement('td');
             const removeButton = document.createElement('button');
             removeButton.type = 'button';
             removeButton.className = 'btn btn-danger btn-xs';
             removeButton.textContent = 'Удалить';
             removeButton.addEventListener('click', () => {
-                cell.closest('tr').remove();
+                const state = card._state;
+                state.rows = state.rows.filter((row) => row.id !== rowId);
+                renderTable(card);
             });
             cell.append(removeButton);
             return cell;
@@ -211,18 +242,16 @@ require __DIR__ . '/partials/layout-start.php';
         };
 
         const sortByColumn = (tableCard, index) => {
-            const tbody = tableCard.querySelector('tbody');
-            const table = tableCard.querySelector('table');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-            const isAscending = !table.dataset.sortDir || table.dataset.sortDir === 'desc';
-            rows.sort((a, b) => {
-                const aText = (a.children[index]?.textContent || '').trim();
-                const bText = (b.children[index]?.textContent || '').trim();
+            const state = tableCard._state;
+            const isAscending = state.sortIndex !== index || state.sortDir === 'desc';
+            state.sortIndex = index;
+            state.sortDir = isAscending ? 'asc' : 'desc';
+            state.rows.sort((a, b) => {
+                const aText = (a.cells[index] || '').trim();
+                const bText = (b.cells[index] || '').trim();
                 return isAscending ? aText.localeCompare(bText, 'ru') : bText.localeCompare(aText, 'ru');
             });
-            tbody.innerHTML = '';
-            rows.forEach((row) => tbody.appendChild(row));
-            table.dataset.sortDir = isAscending ? 'asc' : 'desc';
+            renderTable(tableCard);
         };
 
         const bindSortHandlers = (tableCard) => {
@@ -237,24 +266,30 @@ require __DIR__ . '/partials/layout-start.php';
             });
         };
 
+        const bindHeaderEditors = (tableCard) => {
+            tableCard.querySelectorAll('.header-label').forEach((label, index) => {
+                label.addEventListener('input', () => {
+                    tableCard._state.headers[index] = label.textContent.trim() || 'Без названия';
+                });
+            });
+        };
+
         const addRow = (tableCard) => {
-            const table = tableCard.querySelector('table');
-            const tbody = tableCard.querySelector('tbody');
-            const columnCount = table.querySelectorAll('thead th').length;
-            const tr = document.createElement('tr');
-            for (let i = 0; i < columnCount; i += 1) {
-                if (i === columnCount - 1) {
-                    tr.appendChild(createActionCell());
-                } else {
-                    tr.appendChild(createCell(''));
-                }
-            }
-            tbody.appendChild(tr);
+            const state = tableCard._state;
+            const rowId = createRowId();
+            state.rows.push({
+                id: rowId,
+                cells: state.headers.map(() => '')
+            });
+            renderTable(tableCard);
         };
 
         const buildSortableHeader = (labelText) => {
             const header = document.createElement('th');
             header.dataset.sortable = 'true';
+
+            const wrap = document.createElement('span');
+            wrap.className = 'header-wrap';
 
             const sortButton = document.createElement('button');
             sortButton.type = 'button';
@@ -267,7 +302,8 @@ require __DIR__ . '/partials/layout-start.php';
             label.textContent = labelText;
             label.setAttribute('contenteditable', 'true');
 
-            header.append(sortButton, label);
+            wrap.append(sortButton, label);
+            header.append(wrap);
             return header;
         };
 
@@ -277,11 +313,9 @@ require __DIR__ . '/partials/layout-start.php';
             const actionHeader = headerRow.lastElementChild;
             const newHeader = buildSortableHeader('Новый столбец');
             headerRow.insertBefore(newHeader, actionHeader);
-            table.querySelectorAll('tbody tr').forEach((row) => {
-                const actionCell = row.lastElementChild;
-                const newCell = createCell('');
-                row.insertBefore(newCell, actionCell);
-            });
+            const state = tableCard._state;
+            state.headers.push('Новый столбец');
+            state.rows.forEach((row) => row.cells.push(''));
             bindSortHandlers(tableCard);
             const label = newHeader.querySelector('.header-label');
             if (label) {
@@ -292,21 +326,15 @@ require __DIR__ . '/partials/layout-start.php';
                 selection.removeAllRanges();
                 selection.addRange(range);
             }
+            bindHeaderEditors(tableCard);
+            renderTable(tableCard);
         };
 
         const exportTable = (tableCard, type) => {
             const table = tableCard.querySelector('table');
-            const headers = Array.from(table.querySelectorAll('thead th'))
-                .slice(0, -1)
-                .map((th) => {
-                    const label = th.querySelector('.header-label');
-                    return label ? label.textContent.trim() : th.textContent.trim();
-                });
-            const rows = Array.from(table.querySelectorAll('tbody tr')).map((row) => {
-                return Array.from(row.children)
-                    .slice(0, -1)
-                    .map((cell) => cell.textContent.trim());
-            });
+            const state = tableCard._state;
+            const headers = state.headers;
+            const rows = state.rows.map((row) => row.cells);
 
             const tableHtml = `<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Resolve IP</title></head><body>`
                 + `<table border="1"><thead><tr>${headers.map((h) => `<th>${h}</th>`).join('')}</tr></thead>`
@@ -334,6 +362,52 @@ require __DIR__ . '/partials/layout-start.php';
             }
         };
 
+        const renderPagination = (tableCard, totalPages) => {
+            const pagination = tableCard.querySelector('.table-pagination');
+            pagination.innerHTML = '';
+            if (totalPages <= 1) {
+                return;
+            }
+            for (let page = 1; page <= totalPages; page += 1) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'page-btn' + (page === tableCard._state.page ? ' is-active' : '');
+                button.textContent = page;
+                button.addEventListener('click', () => {
+                    tableCard._state.page = page;
+                    renderTable(tableCard);
+                });
+                pagination.appendChild(button);
+            }
+        };
+
+        const renderTable = (tableCard) => {
+            const state = tableCard._state;
+            const tbody = tableCard.querySelector('tbody');
+            const query = state.query.trim().toLowerCase();
+            const filteredRows = query
+                ? state.rows.filter((row) => row.cells.join(' ').toLowerCase().includes(query))
+                : [...state.rows];
+            const totalPages = Math.max(1, Math.ceil(filteredRows.length / state.perPage));
+            if (state.page > totalPages) {
+                state.page = 1;
+            }
+            const start = (state.page - 1) * state.perPage;
+            const pageRows = filteredRows.slice(start, start + state.perPage);
+
+            tbody.innerHTML = '';
+            pageRows.forEach((row) => {
+                const tr = document.createElement('tr');
+                row.cells.forEach((value, index) => {
+                    const editable = ![0, 8].includes(index);
+                    tr.append(createCell(value, editable, row.id, index, state));
+                });
+                tr.append(createActionCell(row.id, tableCard));
+                tbody.appendChild(tr);
+            });
+            renderPagination(tableCard, totalPages);
+        };
+
         const createTableCard = (tableId, results) => {
             const card = tableTemplate.content.firstElementChild.cloneNode(true);
             const meta = card.querySelector('.table-card__meta');
@@ -344,26 +418,23 @@ require __DIR__ . '/partials/layout-start.php';
             const moveHandle = card.querySelector('.table-card__move');
 
             card.dataset.tableId = tableId;
+            card._state = {
+                headers: Array.from(card.querySelectorAll('thead th'))
+                    .slice(0, -1)
+                    .map((th) => th.querySelector('.header-label')?.textContent.trim() || th.textContent.trim()),
+                rows: results.map((row) => ({
+                    id: createRowId(),
+                    cells: [row.ip, row.domain, row.country, row.region, row.city, row.isp, row.org, row.asn, row.status]
+                })),
+                page: 1,
+                perPage: 5,
+                query: '',
+                sortIndex: null,
+                sortDir: 'asc'
+            };
             const order = tableStack.querySelectorAll('.table-card').length + 1;
             title.textContent = `Результаты #${order}`;
             meta.textContent = `Создано: ${new Date().toLocaleString('ru-RU')}. Адресов: ${results.length}.`;
-
-            results.forEach((row) => {
-                const tr = document.createElement('tr');
-                tr.append(
-                    createCell(row.ip, false),
-                    createCell(row.domain),
-                    createCell(row.country),
-                    createCell(row.region),
-                    createCell(row.city),
-                    createCell(row.isp),
-                    createCell(row.org),
-                    createCell(row.asn),
-                    createCell(row.status, false),
-                    createActionCell()
-                );
-                tbody.appendChild(tr);
-            });
 
             card.querySelectorAll('[data-action]').forEach((button) => {
                 const action = button.dataset.action;
@@ -381,7 +452,11 @@ require __DIR__ . '/partials/layout-start.php';
                 }
             });
 
-            searchInput.addEventListener('input', () => applySearch(card));
+            searchInput.addEventListener('input', () => {
+                card._state.query = searchInput.value;
+                card._state.page = 1;
+                renderTable(card);
+            });
             deleteButton.addEventListener('click', async () => {
                 const response = await fetch('/resolve-ip-action.php', {
                     method: 'POST',
@@ -427,6 +502,8 @@ require __DIR__ . '/partials/layout-start.php';
             });
 
             bindSortHandlers(card);
+            bindHeaderEditors(card);
+            renderTable(card);
             return card;
         };
 
