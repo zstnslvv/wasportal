@@ -11,6 +11,7 @@ RUN set -eux; \
         unzip \
         python3 \
         python3-pip \
+        libonig-dev \
         libcurl4-openssl-dev \
         libzip-dev \
         libpng-dev \
