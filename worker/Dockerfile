@@ -6,6 +6,7 @@ ARG APT_DEBUG="-o Debug::Acquire::http=true -o Debug::Acquire::https=true"
 RUN set -eux; \
     apt-get update -o Acquire::Retries=5 ${APT_DEBUG}; \
     apt-get install -y --no-install-recommends --fix-missing ${APT_DEBUG} \
+        ca-certificates \
         curl \
         git \
         unzip \
