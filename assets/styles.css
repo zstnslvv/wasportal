@@ -535,6 +535,7 @@ body {
 
 .table-wrapper {
     overflow-x: auto;
+    max-width: 100%;
 }
 
 .table-pagination {
@@ -591,6 +592,27 @@ body {
     white-space: nowrap;
 }
 
+.column-delete {
+    border: 0;
+    background: transparent;
+    color: #ffb2b2;
+    width: 20px;
+    height: 20px;
+    display: none;
+    place-items: center;
+    cursor: pointer;
+}
+
+.column-delete svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+.table-card.is-column-edit .column-delete {
+    display: inline-grid;
+}
+
 .data-table tbody tr:hover {
     background: rgba(10, 20, 45, 0.35);
 }
@@ -610,6 +632,7 @@ body {
     padding: 16px;
     background: rgba(9, 20, 45, 0.6);
     box-shadow: 4px 4px 0 var(--shadow);
+    overflow: hidden;
 }
 
 .table-card.is-dragging {

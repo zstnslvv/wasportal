@@ -61,6 +61,9 @@ require __DIR__ . '/partials/layout-start.php';
                 <button class="icon-btn" type="button" data-action="add-column" aria-label="Добавить столбец">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6v14H4zM14 11h6v2h-6zm3-6h2v14h-2z"/></svg>
                 </button>
+                <button class="icon-btn" type="button" data-action="toggle-columns" aria-label="Режим редактирования столбцов">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17.3V20h2.7l8-8-2.7-2.7-8 8zM20.7 7.8c.4-.4.4-1 0-1.4l-2.1-2.1c-.4-.4-1-.4-1.4 0l-1.6 1.6 3.5 3.5 1.6-1.6z"/></svg>
+                </button>
                 <button class="icon-btn" type="button" data-action="export-xls" aria-label="Скачать XLS">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7zM14 3v5h5M9 13l2 2 3-3M9 17l2 2 3-3"/></svg>
                 </button>
@@ -79,6 +82,9 @@ require __DIR__ . '/partials/layout-start.php';
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
                             </button>
                             <span class="header-label" contenteditable="true">IP</span>
+                            <button class="column-delete" type="button" aria-label="Удалить столбец">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                            </button>
                         </span>
                     </th>
                     <th data-sortable>
@@ -87,6 +93,9 @@ require __DIR__ . '/partials/layout-start.php';
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
                             </button>
                             <span class="header-label" contenteditable="true">Домен</span>
+                            <button class="column-delete" type="button" aria-label="Удалить столбец">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                            </button>
                         </span>
                     </th>
                     <th data-sortable>
@@ -95,6 +104,9 @@ require __DIR__ . '/partials/layout-start.php';
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
                             </button>
                             <span class="header-label" contenteditable="true">Страна</span>
+                            <button class="column-delete" type="button" aria-label="Удалить столбец">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                            </button>
                         </span>
                     </th>
                     <th data-sortable>
@@ -103,6 +115,9 @@ require __DIR__ . '/partials/layout-start.php';
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
                             </button>
                             <span class="header-label" contenteditable="true">Регион</span>
+                            <button class="column-delete" type="button" aria-label="Удалить столбец">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                            </button>
                         </span>
                     </th>
                     <th data-sortable>
@@ -111,6 +126,9 @@ require __DIR__ . '/partials/layout-start.php';
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
                             </button>
                             <span class="header-label" contenteditable="true">Город</span>
+                            <button class="column-delete" type="button" aria-label="Удалить столбец">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                            </button>
                         </span>
                     </th>
                     <th data-sortable>
@@ -119,6 +137,9 @@ require __DIR__ . '/partials/layout-start.php';
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
                             </button>
                             <span class="header-label" contenteditable="true">Провайдер</span>
+                            <button class="column-delete" type="button" aria-label="Удалить столбец">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                            </button>
                         </span>
                     </th>
                     <th data-sortable>
@@ -127,6 +148,9 @@ require __DIR__ . '/partials/layout-start.php';
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
                             </button>
                             <span class="header-label" contenteditable="true">Организация</span>
+                            <button class="column-delete" type="button" aria-label="Удалить столбец">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                            </button>
                         </span>
                     </th>
                     <th data-sortable>
@@ -135,6 +159,9 @@ require __DIR__ . '/partials/layout-start.php';
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
                             </button>
                             <span class="header-label" contenteditable="true">ASN</span>
+                            <button class="column-delete" type="button" aria-label="Удалить столбец">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                            </button>
                         </span>
                     </th>
                     <th data-sortable>
@@ -143,6 +170,9 @@ require __DIR__ . '/partials/layout-start.php';
                                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
                             </button>
                             <span class="header-label" contenteditable="true">Статус</span>
+                            <button class="column-delete" type="button" aria-label="Удалить столбец">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                            </button>
                         </span>
                     </th>
                     <th>Действия</th>
@@ -274,6 +304,15 @@ require __DIR__ . '/partials/layout-start.php';
             });
         };
 
+        const bindColumnDeleteHandlers = (tableCard) => {
+            tableCard.querySelectorAll('.column-delete').forEach((button, index) => {
+                button.onclick = (event) => {
+                    event.stopPropagation();
+                    removeColumn(tableCard, index);
+                };
+            });
+        };
+
         const addRow = (tableCard) => {
             const state = tableCard._state;
             const rowId = createRowId();
@@ -302,9 +341,35 @@ require __DIR__ . '/partials/layout-start.php';
             label.textContent = labelText;
             label.setAttribute('contenteditable', 'true');
 
-            wrap.append(sortButton, label);
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'column-delete';
+            deleteButton.setAttribute('aria-label', 'Удалить столбец');
+            deleteButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>';
+
+            wrap.append(sortButton, label, deleteButton);
             header.append(wrap);
             return header;
+        };
+
+        const removeColumn = (tableCard, index) => {
+            if (index < 0) {
+                return;
+            }
+            const table = tableCard.querySelector('table');
+            const headers = table.querySelectorAll('thead th');
+            const targetHeader = headers[index];
+            if (!targetHeader || !targetHeader.dataset.sortable) {
+                return;
+            }
+            const state = tableCard._state;
+            state.headers.splice(index, 1);
+            state.rows.forEach((row) => row.cells.splice(index, 1));
+            targetHeader.remove();
+            bindSortHandlers(tableCard);
+            bindHeaderEditors(tableCard);
+            bindColumnDeleteHandlers(tableCard);
+            renderTable(tableCard);
         };
 
         const addColumn = (tableCard) => {
@@ -327,6 +392,7 @@ require __DIR__ . '/partials/layout-start.php';
                 selection.addRange(range);
             }
             bindHeaderEditors(tableCard);
+            bindColumnDeleteHandlers(tableCard);
             renderTable(tableCard);
         };
 
@@ -444,6 +510,11 @@ require __DIR__ . '/partials/layout-start.php';
                 if (action === 'add-column') {
                     button.addEventListener('click', () => addColumn(card));
                 }
+                if (action === 'toggle-columns') {
+                    button.addEventListener('click', () => {
+                        card.classList.toggle('is-column-edit');
+                    });
+                }
                 if (action === 'export-xls') {
                     button.addEventListener('click', () => exportTable(card, 'xls'));
                 }
@@ -503,6 +574,7 @@ require __DIR__ . '/partials/layout-start.php';
 
             bindSortHandlers(card);
             bindHeaderEditors(card);
+            bindColumnDeleteHandlers(card);
             renderTable(card);
             return card;
         };
