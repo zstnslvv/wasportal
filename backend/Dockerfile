@@ -16,6 +16,7 @@ RUN apt-get update \
         poppler-utils \
         python3 \
         python3-pip \
+        libcurl4-openssl-dev \
         libzip-dev \
         libpng-dev \
         libjpeg62-turbo-dev \
