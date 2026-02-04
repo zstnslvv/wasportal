@@ -38,3 +38,58 @@ http://localhost:8000/login.php
 
 - Все внутренние страницы защищены и требуют аутентификации.
 - Для выхода используйте ссылку «выйти» в левом меню.
+
+---
+
+# Self-hosted конвертация файлов (Docker)
+
+## Запуск
+
+```bash
+docker compose up --build
+```
+
+## URL сервиса
+
+```
+http://localhost:8080/convert.php
+```
+
+## API примеры
+
+### Upload
+
+```bash
+curl -F "file=@sample.docx" http://localhost:8080/api/upload
+```
+
+### Convert
+
+```bash
+curl -X POST http://localhost:8080/api/convert \
+  -H "Content-Type: application/json" \
+  -d '{"file_id":"<file_id>","target_format":"pdf"}'
+```
+
+### Job status
+
+```bash
+curl http://localhost:8080/api/job/<job_id>
+```
+
+### Download result
+
+```bash
+curl -o result.pdf http://localhost:8080/api/download/<job_id>
+```
+
+## Где лежат файлы
+
+- Загрузки: `backend/storage/uploads/<file_id>/`
+- Результаты: `backend/storage/outputs/<job_id>/result.<ext>`
+
+## Как добавить новые конвертации
+
+1. Добавьте расширения в `backend/src/Uploads.php` в `conversionMapping()`.
+2. Реализуйте обработку в `worker/worker.php` в `handleConvert()`.
+3. Обновите UI в `frontend/assets/app.js` (mapping форматов).
