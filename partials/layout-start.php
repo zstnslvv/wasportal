@@ -68,6 +68,10 @@ if (is_string($portalTitle) && $portalTitle !== '') {
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v9H6z"/></svg>
                 <span>пароли</span>
             </a>
+            <a class="nav-link<?php echo $activePage === 'resolve-ip' ? ' is-active' : ''; ?>" href="/resolve-ip.php" data-icon="resolve-ip">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h10M4 6h10M4 18h10M16 8l4 4-4 4"/></svg>
+                <span>Resolve IP</span>
+            </a>
             <button class="nav-toggle" type="button" data-toggle="settings">
                 <span class="nav-toggle__label">настройки</span>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
