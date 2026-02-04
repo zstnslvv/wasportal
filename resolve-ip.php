@@ -55,25 +55,78 @@ require __DIR__ . '/partials/layout-start.php';
                 <input type="search" placeholder="Фильтр по любому столбцу">
             </div>
             <div class="table-toolbar__actions">
-                <button class="btn btn-secondary btn-xs" type="button" data-action="add-row">Добавить строку</button>
-                <button class="btn btn-secondary btn-xs" type="button" data-action="add-column">Добавить столбец</button>
-                <button class="btn btn-secondary btn-xs" type="button" data-action="export-xlsx">Скачать XLSX</button>
-                <button class="btn btn-secondary btn-xs" type="button" data-action="export-pdf">Скачать PDF</button>
+                <button class="icon-btn" type="button" data-action="add-row" aria-label="Добавить строку">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v14h-2zM5 11h14v2H5z"/></svg>
+                </button>
+                <button class="icon-btn" type="button" data-action="add-column" aria-label="Добавить столбец">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6v14H4zM14 11h6v2h-6zm3-6h2v14h-2z"/></svg>
+                </button>
+                <button class="icon-btn" type="button" data-action="export-xls" aria-label="Скачать XLS">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7zM14 3v5h5M9 13l2 2 3-3M9 17l2 2 3-3"/></svg>
+                </button>
+                <button class="icon-btn" type="button" data-action="export-pdf" aria-label="Скачать PDF">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l5 5v13H6zM15 3v5h5M8 17h2v2H8zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
+                </button>
             </div>
         </div>
         <div class="table-wrapper">
             <table class="data-table">
                 <thead>
                 <tr>
-                    <th data-sortable>IP</th>
-                    <th data-sortable>Домен</th>
-                    <th data-sortable>Страна</th>
-                    <th data-sortable>Регион</th>
-                    <th data-sortable>Город</th>
-                    <th data-sortable>Провайдер</th>
-                    <th data-sortable>Организация</th>
-                    <th data-sortable>ASN</th>
-                    <th data-sortable>Статус</th>
+                    <th data-sortable>
+                        <button class="sort-btn" type="button" aria-label="Сортировать по IP">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                        </button>
+                        <span class="header-label" contenteditable="true">IP</span>
+                    </th>
+                    <th data-sortable>
+                        <button class="sort-btn" type="button" aria-label="Сортировать по домену">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                        </button>
+                        <span class="header-label" contenteditable="true">Домен</span>
+                    </th>
+                    <th data-sortable>
+                        <button class="sort-btn" type="button" aria-label="Сортировать по стране">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                        </button>
+                        <span class="header-label" contenteditable="true">Страна</span>
+                    </th>
+                    <th data-sortable>
+                        <button class="sort-btn" type="button" aria-label="Сортировать по региону">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                        </button>
+                        <span class="header-label" contenteditable="true">Регион</span>
+                    </th>
+                    <th data-sortable>
+                        <button class="sort-btn" type="button" aria-label="Сортировать по городу">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                        </button>
+                        <span class="header-label" contenteditable="true">Город</span>
+                    </th>
+                    <th data-sortable>
+                        <button class="sort-btn" type="button" aria-label="Сортировать по провайдеру">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                        </button>
+                        <span class="header-label" contenteditable="true">Провайдер</span>
+                    </th>
+                    <th data-sortable>
+                        <button class="sort-btn" type="button" aria-label="Сортировать по организации">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                        </button>
+                        <span class="header-label" contenteditable="true">Организация</span>
+                    </th>
+                    <th data-sortable>
+                        <button class="sort-btn" type="button" aria-label="Сортировать по ASN">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                        </button>
+                        <span class="header-label" contenteditable="true">ASN</span>
+                    </th>
+                    <th data-sortable>
+                        <button class="sort-btn" type="button" aria-label="Сортировать по статусу">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>
+                        </button>
+                        <span class="header-label" contenteditable="true">Статус</span>
+                    </th>
                     <th>Действия</th>
                 </tr>
                 </thead>
@@ -174,8 +227,13 @@ require __DIR__ . '/partials/layout-start.php';
 
         const bindSortHandlers = (tableCard) => {
             tableCard.querySelectorAll('thead th[data-sortable]').forEach((header, index) => {
-                header.style.cursor = 'pointer';
-                header.onclick = () => sortByColumn(tableCard, index);
+                const sortButton = header.querySelector('.sort-btn');
+                if (sortButton) {
+                    sortButton.onclick = (event) => {
+                        event.stopPropagation();
+                        sortByColumn(tableCard, index);
+                    };
+                }
             });
         };
 
@@ -194,17 +252,30 @@ require __DIR__ . '/partials/layout-start.php';
             tbody.appendChild(tr);
         };
 
+        const buildSortableHeader = (labelText) => {
+            const header = document.createElement('th');
+            header.dataset.sortable = 'true';
+
+            const sortButton = document.createElement('button');
+            sortButton.type = 'button';
+            sortButton.className = 'sort-btn';
+            sortButton.setAttribute('aria-label', 'Сортировать столбец');
+            sortButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 4 4H3l4-4zm10 16-4-4h8l-4 4z"/></svg>';
+
+            const label = document.createElement('span');
+            label.className = 'header-label';
+            label.textContent = labelText;
+            label.setAttribute('contenteditable', 'true');
+
+            header.append(sortButton, label);
+            return header;
+        };
+
         const addColumn = (tableCard) => {
-            const name = prompt('Название нового столбца');
-            if (!name) {
-                return;
-            }
             const table = tableCard.querySelector('table');
             const headerRow = table.querySelector('thead tr');
             const actionHeader = headerRow.lastElementChild;
-            const newHeader = document.createElement('th');
-            newHeader.textContent = name;
-            newHeader.dataset.sortable = 'true';
+            const newHeader = buildSortableHeader('Новый столбец');
             headerRow.insertBefore(newHeader, actionHeader);
             table.querySelectorAll('tbody tr').forEach((row) => {
                 const actionCell = row.lastElementChild;
@@ -212,13 +283,25 @@ require __DIR__ . '/partials/layout-start.php';
                 row.insertBefore(newCell, actionCell);
             });
             bindSortHandlers(tableCard);
+            const label = newHeader.querySelector('.header-label');
+            if (label) {
+                label.focus();
+                const range = document.createRange();
+                range.selectNodeContents(label);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
         };
 
         const exportTable = (tableCard, type) => {
             const table = tableCard.querySelector('table');
             const headers = Array.from(table.querySelectorAll('thead th'))
                 .slice(0, -1)
-                .map((th) => th.textContent.trim());
+                .map((th) => {
+                    const label = th.querySelector('.header-label');
+                    return label ? label.textContent.trim() : th.textContent.trim();
+                });
             const rows = Array.from(table.querySelectorAll('tbody tr')).map((row) => {
                 return Array.from(row.children)
                     .slice(0, -1)
@@ -230,12 +313,12 @@ require __DIR__ . '/partials/layout-start.php';
                 + `<tbody>${rows.map((cells) => `<tr>${cells.map((cell) => `<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody>`
                 + `</table></body></html>`;
 
-            if (type === 'xlsx') {
-                const blob = new Blob([tableHtml], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            if (type === 'xls') {
+                const blob = new Blob([tableHtml], { type: 'application/vnd.ms-excel' });
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = 'resolve-ip.xlsx';
+                link.download = 'resolve-ip.xls';
                 link.click();
                 URL.revokeObjectURL(url);
                 return;
@@ -290,8 +373,8 @@ require __DIR__ . '/partials/layout-start.php';
                 if (action === 'add-column') {
                     button.addEventListener('click', () => addColumn(card));
                 }
-                if (action === 'export-xlsx') {
-                    button.addEventListener('click', () => exportTable(card, 'xlsx'));
+                if (action === 'export-xls') {
+                    button.addEventListener('click', () => exportTable(card, 'xls'));
                 }
                 if (action === 'export-pdf') {
                     button.addEventListener('click', () => exportTable(card, 'pdf'));
