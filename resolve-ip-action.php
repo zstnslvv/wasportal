@@ -4,35 +4,18 @@ require __DIR__ . '/auth.php';
 header('Content-Type: application/json; charset=utf-8');
 
 $payload = json_decode(file_get_contents('php://input'), true);
-$rawIps = $payload['ips'] ?? ($_POST['ips'] ?? '');
+$action = is_array($payload) ? ($payload['action'] ?? 'resolve') : 'resolve';
 
-function extract_ips($input): array
+function respond(int $status, array $data): void
 {
-    $ips = [];
-    if (is_array($input)) {
-        foreach ($input as $item) {
-            if (is_string($item)) {
-                $ips = array_merge($ips, extract_ips($item));
-            }
-        }
-        return array_values(array_unique($ips));
-    }
+    http_response_code($status);
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
-    if (!is_string($input)) {
-        return [];
-    }
-
-    $pattern = '/\b(?:\d{1,3}\.){3}\d{1,3}\b|\b(?:[A-Fa-f0-9]{1,4}:){1,7}[A-Fa-f0-9]{0,4}\b/';
-    if (preg_match_all($pattern, $input, $matches)) {
-        foreach ($matches[0] as $match) {
-            $match = trim($match);
-            if (filter_var($match, FILTER_VALIDATE_IP)) {
-                $ips[] = $match;
-            }
-        }
-    }
-
-    return array_values(array_unique($ips));
+function is_valid_ip(string $ip): bool
+{
+    return filter_var($ip, FILTER_VALIDATE_IP) !== false;
 }
 
 function fetch_ip_data(string $ip): array
@@ -54,6 +37,13 @@ function fetch_ip_data(string $ip): array
     if ($response === false) {
         return [
             'ip' => $ip,
+            'domain' => '—',
+            'country' => '—',
+            'region' => '—',
+            'city' => '—',
+            'isp' => '—',
+            'org' => '—',
+            'asn' => '—',
             'status' => 'error',
             'message' => $error ?: 'Ошибка запроса',
         ];
@@ -63,6 +53,13 @@ function fetch_ip_data(string $ip): array
     if (!is_array($data)) {
         return [
             'ip' => $ip,
+            'domain' => '—',
+            'country' => '—',
+            'region' => '—',
+            'city' => '—',
+            'isp' => '—',
+            'org' => '—',
+            'asn' => '—',
             'status' => 'error',
             'message' => 'Не удалось разобрать ответ',
         ];
@@ -71,6 +68,13 @@ function fetch_ip_data(string $ip): array
     if (($data['status'] ?? '') !== 'success') {
         return [
             'ip' => $ip,
+            'domain' => '—',
+            'country' => '—',
+            'region' => '—',
+            'city' => '—',
+            'isp' => '—',
+            'org' => '—',
+            'asn' => '—',
             'status' => 'error',
             'message' => $data['message'] ?? 'Нет данных',
         ];
@@ -89,21 +93,59 @@ function fetch_ip_data(string $ip): array
     ];
 }
 
-$ips = extract_ips($rawIps);
-if (empty($ips)) {
-    http_response_code(400);
-    echo json_encode([
-        'message' => 'Не найдено валидных IP-адресов.',
-        'results' => [],
-    ], JSON_UNESCAPED_UNICODE);
-    exit;
+if ($action === 'resolve') {
+    $ip = is_array($payload) ? trim((string) ($payload['ip'] ?? '')) : '';
+    if ($ip === '' || !is_valid_ip($ip)) {
+        respond(400, [
+            'message' => 'Передан некорректный IP-адрес.',
+        ]);
+    }
+
+    $result = fetch_ip_data($ip);
+    respond(200, [
+        'result' => $result,
+    ]);
 }
 
-$results = [];
-foreach ($ips as $ip) {
-    $results[] = fetch_ip_data($ip);
+if ($action === 'store') {
+    $results = is_array($payload) ? ($payload['results'] ?? []) : [];
+    if (!is_array($results) || count($results) === 0) {
+        respond(400, [
+            'message' => 'Нет данных для сохранения.',
+        ]);
+    }
+    if (count($results) > 100) {
+        respond(400, [
+            'message' => 'Превышен лимит в 100 адресов.',
+        ]);
+    }
+
+    $tableId = bin2hex(random_bytes(6));
+    $_SESSION['resolve_tables'] = $_SESSION['resolve_tables'] ?? [];
+    $_SESSION['resolve_tables'][$tableId] = $results;
+
+    respond(200, [
+        'tableId' => $tableId,
+    ]);
 }
 
-echo json_encode([
-    'results' => $results,
-], JSON_UNESCAPED_UNICODE);
+if ($action === 'delete') {
+    $tableId = is_array($payload) ? trim((string) ($payload['tableId'] ?? '')) : '';
+    if ($tableId === '') {
+        respond(400, [
+            'message' => 'Не указан идентификатор таблицы.',
+        ]);
+    }
+
+    if (isset($_SESSION['resolve_tables'][$tableId])) {
+        unset($_SESSION['resolve_tables'][$tableId]);
+    }
+
+    respond(200, [
+        'status' => 'deleted',
+    ]);
+}
+
+respond(400, [
+    'message' => 'Неизвестное действие.',
+]);

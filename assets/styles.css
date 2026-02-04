@@ -511,6 +511,49 @@ body {
     background: rgba(10, 20, 45, 0.35);
 }
 
+.table-stack {
+    display: grid;
+    gap: 16px;
+}
+
+.table-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    background: rgba(9, 20, 45, 0.6);
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.table-card.is-dragging {
+    opacity: 0.7;
+}
+
+.table-card__header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.table-card__title {
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.table-card__meta {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.table-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
 .form-error {
     background: rgba(255, 100, 100, 0.12);
     border: 1px solid rgba(255, 100, 100, 0.4);

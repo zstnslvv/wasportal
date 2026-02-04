@@ -26,56 +26,67 @@ require __DIR__ . '/partials/layout-start.php';
     </div>
     <div class="action-row">
         <button class="btn" id="resolve-btn" type="button">Resolve</button>
-        <span class="form-hint">Поддерживаются IPv4 и IPv6.</span>
+        <span class="form-hint">До 100 адресов за один запрос. Поддерживаются IPv4 и IPv6.</span>
     </div>
     <div class="form-message" id="resolve-message" role="status" aria-live="polite"></div>
 </section>
 <section class="panel panel--wide">
-    <div class="table-toolbar">
-        <div class="table-toolbar__search">
-            <label for="resolve-search">Поиск</label>
-            <input id="resolve-search" type="search" placeholder="Фильтр по любому столбцу">
-        </div>
-        <div class="table-toolbar__actions">
-            <button class="btn btn-secondary" type="button" id="add-row-btn">Добавить строку</button>
-            <button class="btn btn-secondary" type="button" id="add-column-btn">Добавить столбец</button>
-            <button class="btn btn-secondary" type="button" id="export-xlsx-btn">Скачать XLSX</button>
-            <button class="btn btn-secondary" type="button" id="export-pdf-btn">Скачать PDF</button>
-        </div>
-    </div>
-    <div class="table-wrapper">
-        <table class="data-table" id="resolve-table">
-            <thead>
-            <tr>
-                <th data-sortable>IP</th>
-                <th data-sortable>Домен</th>
-                <th data-sortable>Страна</th>
-                <th data-sortable>Регион</th>
-                <th data-sortable>Город</th>
-                <th data-sortable>Провайдер</th>
-                <th data-sortable>Организация</th>
-                <th data-sortable>ASN</th>
-                <th data-sortable>Статус</th>
-                <th>Действия</th>
-            </tr>
-            </thead>
-            <tbody id="resolve-table-body"></tbody>
-        </table>
-    </div>
+    <div class="table-stack" id="resolve-table-stack"></div>
 </section>
+<template id="resolve-table-template">
+    <article class="table-card" draggable="true">
+        <div class="table-card__header">
+            <div>
+                <h3 class="table-card__title">Результаты</h3>
+                <p class="table-card__meta"></p>
+            </div>
+            <div class="table-card__actions">
+                <button class="btn btn-secondary btn-xs table-card__move" type="button">Переместить</button>
+                <button class="btn btn-danger btn-xs table-card__delete" type="button">Удалить таблицу</button>
+            </div>
+        </div>
+        <div class="table-toolbar">
+            <div class="table-toolbar__search">
+                <label>Поиск</label>
+                <input type="search" placeholder="Фильтр по любому столбцу">
+            </div>
+            <div class="table-toolbar__actions">
+                <button class="btn btn-secondary btn-xs" type="button" data-action="add-row">Добавить строку</button>
+                <button class="btn btn-secondary btn-xs" type="button" data-action="add-column">Добавить столбец</button>
+                <button class="btn btn-secondary btn-xs" type="button" data-action="export-xlsx">Скачать XLSX</button>
+                <button class="btn btn-secondary btn-xs" type="button" data-action="export-pdf">Скачать PDF</button>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th data-sortable>IP</th>
+                    <th data-sortable>Домен</th>
+                    <th data-sortable>Страна</th>
+                    <th data-sortable>Регион</th>
+                    <th data-sortable>Город</th>
+                    <th data-sortable>Провайдер</th>
+                    <th data-sortable>Организация</th>
+                    <th data-sortable>ASN</th>
+                    <th data-sortable>Статус</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </article>
+</template>
 <script>
-    const resolvePage = (() => {
+    (() => {
         const singleInput = document.getElementById('single-ip');
         const bulkInput = document.getElementById('bulk-ips');
         const resolveButton = document.getElementById('resolve-btn');
         const messageBox = document.getElementById('resolve-message');
-        const tableBody = document.getElementById('resolve-table-body');
-        const table = document.getElementById('resolve-table');
-        const searchInput = document.getElementById('resolve-search');
-        const addRowButton = document.getElementById('add-row-btn');
-        const addColumnButton = document.getElementById('add-column-btn');
-        const exportXlsxButton = document.getElementById('export-xlsx-btn');
-        const exportPdfButton = document.getElementById('export-pdf-btn');
+        const tableStack = document.getElementById('resolve-table-stack');
+        const tableTemplate = document.getElementById('resolve-table-template');
+        const maxIps = 100;
 
         const ipv4Regex = /\b(?:\d{1,3}\.){3}\d{1,3}\b/g;
         const ipv6Regex = /\b(?:[A-Fa-f0-9]{1,4}:){1,7}[A-Fa-f0-9]{0,4}\b/g;
@@ -117,48 +128,41 @@ require __DIR__ . '/partials/layout-start.php';
             return cell;
         };
 
-        const renderRows = (rows) => {
-            tableBody.innerHTML = '';
-            rows.forEach((row) => {
-                const tr = document.createElement('tr');
-                tr.append(
-                    createCell(row.ip, false),
-                    createCell(row.domain),
-                    createCell(row.country),
-                    createCell(row.region),
-                    createCell(row.city),
-                    createCell(row.isp),
-                    createCell(row.org),
-                    createCell(row.asn),
-                    createCell(row.status, false),
-                    createActionCell()
-                );
-                tableBody.appendChild(tr);
-            });
-        };
-
-        const applySearch = () => {
-            const query = searchInput.value.trim().toLowerCase();
-            tableBody.querySelectorAll('tr').forEach((row) => {
+        const applySearch = (tableCard) => {
+            const input = tableCard.querySelector('input[type="search"]');
+            const tbody = tableCard.querySelector('tbody');
+            const query = input.value.trim().toLowerCase();
+            tbody.querySelectorAll('tr').forEach((row) => {
                 const text = row.textContent.toLowerCase();
                 row.style.display = text.includes(query) ? '' : 'none';
             });
         };
 
-        const sortByColumn = (index) => {
-            const rows = Array.from(tableBody.querySelectorAll('tr'));
+        const sortByColumn = (tableCard, index) => {
+            const tbody = tableCard.querySelector('tbody');
+            const table = tableCard.querySelector('table');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
             const isAscending = !table.dataset.sortDir || table.dataset.sortDir === 'desc';
             rows.sort((a, b) => {
                 const aText = (a.children[index]?.textContent || '').trim();
                 const bText = (b.children[index]?.textContent || '').trim();
                 return isAscending ? aText.localeCompare(bText, 'ru') : bText.localeCompare(aText, 'ru');
             });
-            tableBody.innerHTML = '';
-            rows.forEach((row) => tableBody.appendChild(row));
+            tbody.innerHTML = '';
+            rows.forEach((row) => tbody.appendChild(row));
             table.dataset.sortDir = isAscending ? 'asc' : 'desc';
         };
 
-        const addRow = () => {
+        const bindSortHandlers = (tableCard) => {
+            tableCard.querySelectorAll('thead th[data-sortable]').forEach((header, index) => {
+                header.style.cursor = 'pointer';
+                header.onclick = () => sortByColumn(tableCard, index);
+            });
+        };
+
+        const addRow = (tableCard) => {
+            const table = tableCard.querySelector('table');
+            const tbody = tableCard.querySelector('tbody');
             const columnCount = table.querySelectorAll('thead th').length;
             const tr = document.createElement('tr');
             for (let i = 0; i < columnCount; i += 1) {
@@ -168,33 +172,35 @@ require __DIR__ . '/partials/layout-start.php';
                     tr.appendChild(createCell(''));
                 }
             }
-            tableBody.appendChild(tr);
+            tbody.appendChild(tr);
         };
 
-        const addColumn = () => {
+        const addColumn = (tableCard) => {
             const name = prompt('Название нового столбца');
             if (!name) {
                 return;
             }
+            const table = tableCard.querySelector('table');
             const headerRow = table.querySelector('thead tr');
             const actionHeader = headerRow.lastElementChild;
             const newHeader = document.createElement('th');
             newHeader.textContent = name;
             newHeader.dataset.sortable = 'true';
             headerRow.insertBefore(newHeader, actionHeader);
-            tableBody.querySelectorAll('tr').forEach((row) => {
+            table.querySelectorAll('tbody tr').forEach((row) => {
                 const actionCell = row.lastElementChild;
                 const newCell = createCell('');
                 row.insertBefore(newCell, actionCell);
             });
-            bindSortHandlers();
+            bindSortHandlers(tableCard);
         };
 
-        const exportTable = (type) => {
+        const exportTable = (tableCard, type) => {
+            const table = tableCard.querySelector('table');
             const headers = Array.from(table.querySelectorAll('thead th'))
                 .slice(0, -1)
                 .map((th) => th.textContent.trim());
-            const rows = Array.from(tableBody.querySelectorAll('tr')).map((row) => {
+            const rows = Array.from(table.querySelectorAll('tbody tr')).map((row) => {
                 return Array.from(row.children)
                     .slice(0, -1)
                     .map((cell) => cell.textContent.trim());
@@ -226,12 +232,94 @@ require __DIR__ . '/partials/layout-start.php';
             }
         };
 
-        const bindSortHandlers = () => {
-            table.querySelectorAll('thead th[data-sortable]').forEach((header, index) => {
-                header.style.cursor = 'pointer';
-                header.onclick = () => sortByColumn(index);
+        const createTableCard = (tableId, results) => {
+            const card = tableTemplate.content.firstElementChild.cloneNode(true);
+            const meta = card.querySelector('.table-card__meta');
+            const tbody = card.querySelector('tbody');
+            const searchInput = card.querySelector('input[type="search"]');
+            const deleteButton = card.querySelector('.table-card__delete');
+            const moveHandle = card.querySelector('.table-card__move');
+
+            card.dataset.tableId = tableId;
+            meta.textContent = `Создано: ${new Date().toLocaleString('ru-RU')}. Адресов: ${results.length}.`;
+
+            results.forEach((row) => {
+                const tr = document.createElement('tr');
+                tr.append(
+                    createCell(row.ip, false),
+                    createCell(row.domain),
+                    createCell(row.country),
+                    createCell(row.region),
+                    createCell(row.city),
+                    createCell(row.isp),
+                    createCell(row.org),
+                    createCell(row.asn),
+                    createCell(row.status, false),
+                    createActionCell()
+                );
+                tbody.appendChild(tr);
             });
+
+            card.querySelectorAll('[data-action]').forEach((button) => {
+                const action = button.dataset.action;
+                if (action === 'add-row') {
+                    button.addEventListener('click', () => addRow(card));
+                }
+                if (action === 'add-column') {
+                    button.addEventListener('click', () => addColumn(card));
+                }
+                if (action === 'export-xlsx') {
+                    button.addEventListener('click', () => exportTable(card, 'xlsx'));
+                }
+                if (action === 'export-pdf') {
+                    button.addEventListener('click', () => exportTable(card, 'pdf'));
+                }
+            });
+
+            searchInput.addEventListener('input', () => applySearch(card));
+            deleteButton.addEventListener('click', async () => {
+                const response = await fetch('/resolve-ip-action.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'delete', tableId })
+                });
+                if (response.ok) {
+                    card.remove();
+                } else {
+                    showMessage('Не удалось удалить таблицу на сервере.', 'form-error');
+                }
+            });
+
+            moveHandle.addEventListener('mousedown', (event) => {
+                event.preventDefault();
+            });
+
+            card.addEventListener('dragstart', () => {
+                card.classList.add('is-dragging');
+            });
+
+            card.addEventListener('dragend', () => {
+                card.classList.remove('is-dragging');
+            });
+
+            bindSortHandlers(card);
+            return card;
         };
+
+        tableStack.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            const dragging = tableStack.querySelector('.is-dragging');
+            if (!dragging) {
+                return;
+            }
+            const afterElement = Array.from(tableStack.querySelectorAll('.table-card:not(.is-dragging)'))
+                .find((card) => event.clientY <= card.getBoundingClientRect().top + card.offsetHeight / 2);
+            if (afterElement) {
+                tableStack.insertBefore(dragging, afterElement);
+            } else {
+                tableStack.appendChild(dragging);
+            }
+        });
 
         resolveButton.addEventListener('click', async () => {
             const ips = extractIps();
@@ -239,33 +327,62 @@ require __DIR__ . '/partials/layout-start.php';
                 showMessage('Добавьте хотя бы один IP-адрес.', 'form-error');
                 return;
             }
+            if (ips.length > maxIps) {
+                showMessage(`Слишком много адресов: максимум ${maxIps}.`, 'form-error');
+                return;
+            }
+
+            resolveButton.disabled = true;
             showMessage('Запрос выполняется...', 'form-success');
+
+            const results = [];
+            for (const ip of ips) {
+                showMessage(`Резолвим: ${ip}`, 'form-success');
+                try {
+                    const response = await fetch('/resolve-ip-action.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'resolve', ip })
+                    });
+                    const payload = await response.json();
+                    if (!response.ok || !payload || !payload.result) {
+                        throw new Error(payload?.message || 'Ошибка запроса');
+                    }
+                    results.push(payload.result);
+                } catch (error) {
+                    results.push({
+                        ip,
+                        domain: '—',
+                        country: '—',
+                        region: '—',
+                        city: '—',
+                        isp: '—',
+                        org: '—',
+                        asn: '—',
+                        status: 'error'
+                    });
+                }
+            }
+
             try {
                 const response = await fetch('/resolve-ip-action.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ips })
+                    body: JSON.stringify({ action: 'store', results })
                 });
                 const payload = await response.json();
-                if (!response.ok || !payload || !Array.isArray(payload.results)) {
-                    throw new Error(payload?.message || 'Не удалось получить данные.');
+                if (!response.ok || !payload || !payload.tableId) {
+                    throw new Error(payload?.message || 'Не удалось сохранить таблицу.');
                 }
-                renderRows(payload.results);
-                applySearch();
+                const card = createTableCard(payload.tableId, results);
+                tableStack.prepend(card);
                 showMessage('Готово: данные обновлены.', 'form-success');
             } catch (error) {
-                showMessage(error.message || 'Ошибка запроса.', 'form-error');
+                showMessage(error.message || 'Ошибка сохранения данных.', 'form-error');
+            } finally {
+                resolveButton.disabled = false;
             }
         });
-
-        searchInput.addEventListener('input', applySearch);
-        addRowButton.addEventListener('click', addRow);
-        addColumnButton.addEventListener('click', addColumn);
-        exportXlsxButton.addEventListener('click', () => exportTable('xlsx'));
-        exportPdfButton.addEventListener('click', () => exportTable('pdf'));
-        bindSortHandlers();
-
-        return {};
     })();
 </script>
 <?php require __DIR__ . '/partials/layout-end.php'; ?>
