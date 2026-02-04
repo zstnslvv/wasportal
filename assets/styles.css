@@ -558,6 +558,9 @@ body {
     color: var(--muted);
     background: rgba(10, 20, 40, 0.6);
     letter-spacing: 0.6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .data-table tbody tr:hover {
