@@ -13,6 +13,7 @@ RUN set -eux; \
         python3-pip \
         libonig-dev \
         libcurl4-openssl-dev \
+        libxml2-dev \
         libzip-dev \
         libpng-dev \
         libjpeg62-turbo-dev \
