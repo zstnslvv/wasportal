@@ -175,7 +175,14 @@ require __DIR__ . '/partials/layout-start.php';
                             </button>
                         </span>
                     </th>
-                    <th>Действия</th>
+                    <th>
+                        <span class="header-wrap">
+                            <span class="header-label">Действия</span>
+                            <button class="column-delete" type="button" aria-label="Удалить столбец">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 14H7L6 7zm3-3h6l1 2H8l1-2z"/></svg>
+                            </button>
+                        </span>
+                    </th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -359,12 +366,13 @@ require __DIR__ . '/partials/layout-start.php';
             const table = tableCard.querySelector('table');
             const headers = table.querySelectorAll('thead th');
             const targetHeader = headers[index];
-            if (!targetHeader || !targetHeader.dataset.sortable) {
-                return;
-            }
             const state = tableCard._state;
-            state.headers.splice(index, 1);
-            state.rows.forEach((row) => row.cells.splice(index, 1));
+            if (targetHeader?.dataset.sortable) {
+                state.headers.splice(index, 1);
+                state.rows.forEach((row) => row.cells.splice(index, 1));
+            } else {
+                state.hasActions = false;
+            }
             targetHeader.remove();
             bindSortHandlers(tableCard);
             bindHeaderEditors(tableCard);
@@ -375,10 +383,10 @@ require __DIR__ . '/partials/layout-start.php';
         const addColumn = (tableCard) => {
             const table = tableCard.querySelector('table');
             const headerRow = table.querySelector('thead tr');
-            const actionHeader = headerRow.lastElementChild;
+            const state = tableCard._state;
+            const actionHeader = state.hasActions ? headerRow.lastElementChild : null;
             const newHeader = buildSortableHeader('Новый столбец');
             headerRow.insertBefore(newHeader, actionHeader);
-            const state = tableCard._state;
             state.headers.push('Новый столбец');
             state.rows.forEach((row) => row.cells.push(''));
             bindSortHandlers(tableCard);
@@ -468,7 +476,9 @@ require __DIR__ . '/partials/layout-start.php';
                     const editable = ![0, 8].includes(index);
                     tr.append(createCell(value, editable, row.id, index, state));
                 });
-                tr.append(createActionCell(row.id, tableCard));
+                if (state.hasActions) {
+                    tr.append(createActionCell(row.id, tableCard));
+                }
                 tbody.appendChild(tr);
             });
             renderPagination(tableCard, totalPages);
@@ -496,7 +506,8 @@ require __DIR__ . '/partials/layout-start.php';
                 perPage: 5,
                 query: '',
                 sortIndex: null,
-                sortDir: 'asc'
+                sortDir: 'asc',
+                hasActions: true
             };
             const order = tableStack.querySelectorAll('.table-card').length + 1;
             title.textContent = `Результаты #${order}`;
