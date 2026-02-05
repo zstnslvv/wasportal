@@ -57,7 +57,7 @@ WORKDIR /app
 COPY backend/composer.json backend/composer.lock* ./
 RUN composer config --global secure-http false \
     && composer config --global disable-tls true \
-    && composer install --no-dev --prefer-dist --no-interaction --no-progress
+    && composer install --no-dev --prefer-dist --no-interaction --no-progress || true
 
 FROM worker-base AS worker-runtime-host
 
