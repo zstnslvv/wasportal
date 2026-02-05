@@ -1,2 +1,4 @@
 <?php
-require __DIR__ . '/../frontend/convert.php';
+require __DIR__ . '/../auth.php';
+header('Location: /convert.php');
+exit;
