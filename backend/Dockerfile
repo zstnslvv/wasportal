@@ -5,6 +5,7 @@ ARG APT_DEBUG="-o Debug::Acquire::http=true -o Debug::Acquire::https=true"
 ARG ALLOW_INSECURE_DOWNLOADS="false"
 ENV CURL_OPTS="--retry 5 --retry-connrefused --retry-delay 2 --fail -k"
 ENV COMPOSER_DISABLE_TLS=1
+ENV COMPOSER_SECURE_HTTP=0
 ENV COMPOSER_PROCESS_TIMEOUT=600
 ENV COMPOSER_CURL_OPTIONS='{"ssl_verify_peer":false,"ssl_verify_host":false,"timeout":300}'
 ENV ALLOW_INSECURE_DOWNLOADS=${ALLOW_INSECURE_DOWNLOADS}
