@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Конвертация файлов (Free engines)</title>
-    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/converter/assets/style.css">
 </head>
 <body>
     <main class="container">
@@ -54,6 +54,6 @@
 
     <div class="toast" id="toast"></div>
 
-    <script src="/assets/app.js"></script>
+    <script src="/converter/assets/app.js"></script>
 </body>
 </html>

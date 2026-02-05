@@ -52,7 +52,7 @@ docker compose up --build
 ## URL сервиса
 
 ```
-http://localhost:8080/convert.php
+http://localhost:8080/converter/convert.php
 ```
 
 ## API примеры
