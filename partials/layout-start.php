@@ -60,7 +60,7 @@ if (is_string($portalTitle) && $portalTitle !== '') {
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm9.5 16.5-4.2-4.2"/></svg>
                 <span>поиск</span>
             </a>
-            <a class="nav-link<?php echo $activePage === 'convert' ? ' is-active' : ''; ?>" href="/convert.php" data-icon="convert">
+            <a class="nav-link<?php echo $activePage === 'convert' ? ' is-active' : ''; ?>" href="/converter/convert.php" data-icon="convert">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v4m0 12H7v-4m10-8-3-3m3 3-3 3M7 16l3 3m-3-3 3-3"/></svg>
                 <span>конвертация</span>
             </a>
@@ -72,11 +72,11 @@ if (is_string($portalTitle) && $portalTitle !== '') {
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h10M4 6h10M4 18h10M16 8l4 4-4 4"/></svg>
                 <span>Resolve IP</span>
             </a>
-            <button class="nav-toggle" type="button" data-toggle="settings">
+            <a class="nav-toggle" href="/settings.php">
                 <span class="nav-toggle__label">настройки</span>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="nav-submenu" data-submenu="settings">
+            </a>
+            <div class="nav-submenu is-open" data-submenu="settings">
                 <a class="nav-link<?php echo $activePage === 'settings' ? ' is-active' : ''; ?>" href="/settings.php" data-icon="settings">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm9 4-2.2.8.4 2.3-2 1.2-1.5-1.8-2 .8-1-2.1-2.2-.1-1 2.1-2-.8-1.5 1.8-2-1.2.4-2.3L3 12l2.2-.8-.4-2.3 2-1.2 1.5 1.8 2-.8 1-2.1 2.2.1 1 2.1 2-.8 1.5-1.8 2 1.2-.4 2.3z"/></svg>
                     <span>профиль</span>
@@ -86,11 +86,11 @@ if (is_string($portalTitle) && $portalTitle !== '') {
                     <span>интеграции</span>
                 </a>
             </div>
-            <button class="nav-toggle" type="button" data-toggle="admin">
+            <a class="nav-toggle" href="/admin.php">
                 <span class="nav-toggle__label">администрирование</span>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="nav-submenu" data-submenu="admin">
+            </a>
+            <div class="nav-submenu is-open" data-submenu="admin">
                 <a class="nav-link<?php echo $activePage === 'admin' ? ' is-active' : ''; ?>" href="/admin.php" data-icon="admin">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-3z"/></svg>
                     <span>доступы</span>
