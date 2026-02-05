@@ -75,11 +75,13 @@ document.querySelectorAll('.icon-button').forEach((button) => {
 });
 
 document.querySelectorAll('[data-toggle]').forEach((toggle) => {
-    toggle.addEventListener('click', () => {
+    toggle.addEventListener('click', (event) => {
+        event.preventDefault();
         const key = toggle.dataset.toggle;
         const submenu = document.querySelector(`[data-submenu="${key}"]`);
         if (submenu) {
-            submenu.classList.toggle('is-open');
+            const isOpen = submenu.classList.toggle('is-open');
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         }
     });
 });
