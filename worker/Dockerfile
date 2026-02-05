@@ -56,7 +56,8 @@ RUN apk add --no-cache ca-certificates
 
 WORKDIR /app
 COPY backend/composer.json backend/composer.lock* ./
-RUN composer install --no-dev --prefer-dist --no-interaction --no-progress
+RUN composer config --global secure-http false \
+    && composer install --no-dev --prefer-dist --no-interaction --no-progress
 
 FROM worker-base AS worker-runtime-host
 
