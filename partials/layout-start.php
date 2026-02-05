@@ -6,6 +6,11 @@ if (!isset($activePage)) {
     $activePage = '';
 }
 
+$settingsPages = ['settings', 'integrations'];
+$adminPages = ['admin', 'admin-users', 'reports', 'stats', 'ldap', 'smtp'];
+$settingsOpen = in_array($activePage, $settingsPages, true);
+$adminOpen = in_array($activePage, $adminPages, true);
+
 $settingsPath = __DIR__ . '/../data/settings.json';
 $portalTitle = 'WAS Portal';
 $portalLogo = null;
@@ -72,11 +77,11 @@ if (is_string($portalTitle) && $portalTitle !== '') {
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h10M4 6h10M4 18h10M16 8l4 4-4 4"/></svg>
                 <span>Resolve IP</span>
             </a>
-            <a class="nav-toggle" href="/settings.php">
+            <a class="nav-toggle" href="/settings.php" data-toggle="settings" aria-expanded="<?php echo $settingsOpen ? 'true' : 'false'; ?>">
                 <span class="nav-toggle__label">настройки</span>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </a>
-            <div class="nav-submenu is-open" data-submenu="settings">
+            <div class="nav-submenu<?php echo $settingsOpen ? ' is-open' : ''; ?>" data-submenu="settings">
                 <a class="nav-link<?php echo $activePage === 'settings' ? ' is-active' : ''; ?>" href="/settings.php" data-icon="settings">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm9 4-2.2.8.4 2.3-2 1.2-1.5-1.8-2 .8-1-2.1-2.2-.1-1 2.1-2-.8-1.5 1.8-2-1.2.4-2.3L3 12l2.2-.8-.4-2.3 2-1.2 1.5 1.8 2-.8 1-2.1 2.2.1 1 2.1 2-.8 1.5-1.8 2 1.2-.4 2.3z"/></svg>
                     <span>профиль</span>
@@ -86,11 +91,11 @@ if (is_string($portalTitle) && $portalTitle !== '') {
                     <span>интеграции</span>
                 </a>
             </div>
-            <a class="nav-toggle" href="/admin.php">
+            <a class="nav-toggle" href="/admin.php" data-toggle="admin" aria-expanded="<?php echo $adminOpen ? 'true' : 'false'; ?>">
                 <span class="nav-toggle__label">администрирование</span>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </a>
-            <div class="nav-submenu is-open" data-submenu="admin">
+            <div class="nav-submenu<?php echo $adminOpen ? ' is-open' : ''; ?>" data-submenu="admin">
                 <a class="nav-link<?php echo $activePage === 'admin' ? ' is-active' : ''; ?>" href="/admin.php" data-icon="admin">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 5v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V5l-9-3z"/></svg>
                     <span>доступы</span>
