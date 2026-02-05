@@ -60,7 +60,7 @@ if (is_string($portalTitle) && $portalTitle !== '') {
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm9.5 16.5-4.2-4.2"/></svg>
                 <span>поиск</span>
             </a>
-            <a class="nav-link<?php echo $activePage === 'convert' ? ' is-active' : ''; ?>" href="/converter/" data-icon="convert">
+            <a class="nav-link<?php echo $activePage === 'convert' ? ' is-active' : ''; ?>" href="/converter/convert.php" data-icon="convert">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v4m0 12H7v-4m10-8-3-3m3 3-3 3M7 16l3 3m-3-3 3-3"/></svg>
                 <span>конвертация</span>
             </a>
