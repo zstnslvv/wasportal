@@ -44,13 +44,19 @@ RUN set -eux; \
     mkdir -p /opt/tabula; \
     curl ${CURL_OPTS} -L -o /opt/tabula/tabula.jar https://github.com/tabulapdf/tabula-java/releases/download/v1.0.5/tabula-1.0.5-jar-with-dependencies.jar
 
-FROM composer:2 AS composer-deps
+FROM composer:2-debian AS composer-deps
 
 ENV COMPOSER_DISABLE_TLS=1
 ENV COMPOSER_SECURE_HTTP=0
 ENV COMPOSER_PROCESS_TIMEOUT=600
 ENV COMPOSER_CURL_OPTIONS='{"ssl_verify_peer":false,"ssl_verify_host":false,"timeout":300}'
-RUN apk add --no-cache ca-certificates
+RUN apt-get update \
+    && apt-get install -y \
+        ca-certificates \
+        git \
+        unzip \
+    && update-ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY composer.json composer.lock* ./
