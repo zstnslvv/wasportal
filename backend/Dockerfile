@@ -44,7 +44,7 @@ RUN set -eux; \
     mkdir -p /opt/tabula; \
     curl ${CURL_OPTS} -L -o /opt/tabula/tabula.jar https://github.com/tabulapdf/tabula-java/releases/download/v1.0.5/tabula-1.0.5-jar-with-dependencies.jar
 
-FROM composer:2-debian AS composer-deps
+FROM composer:2 AS composer-deps
 
 ENV COMPOSER_DISABLE_TLS=1
 ENV COMPOSER_SECURE_HTTP=0
