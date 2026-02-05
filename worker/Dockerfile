@@ -3,7 +3,7 @@ FROM php:8.2-cli
 ENV DEBIAN_FRONTEND=noninteractive
 ARG APT_DEBUG="-o Debug::Acquire::http=true -o Debug::Acquire::https=true"
 ARG ALLOW_INSECURE_DOWNLOADS="false"
-ENV CURL_OPTS="--retry 5 --retry-connrefused --retry-delay 2 --fail"
+ENV CURL_OPTS="--retry 5 --retry-connrefused --retry-delay 2 --fail -k"
 ENV ALLOW_INSECURE_DOWNLOADS=${ALLOW_INSECURE_DOWNLOADS}
 
 RUN set -eux; \
@@ -41,16 +41,10 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \
-    if [ "${ALLOW_INSECURE_DOWNLOADS}" = "true" ]; then \
-        CURL_OPTS="${CURL_OPTS} -k"; \
-    fi; \
     curl ${CURL_OPTS} -L -o /usr/local/bin/composer https://getcomposer.org/download/latest-stable/composer.phar \
     && chmod +x /usr/local/bin/composer
 
 RUN set -eux; \
-    if [ "${ALLOW_INSECURE_DOWNLOADS}" = "true" ]; then \
-        CURL_OPTS="${CURL_OPTS} -k"; \
-    fi; \
     mkdir -p /opt/tabula; \
     curl ${CURL_OPTS} -L -o /opt/tabula/tabula.jar https://github.com/tabulapdf/tabula-java/releases/download/v1.0.5/tabula-1.0.5-jar-with-dependencies.jar
 
