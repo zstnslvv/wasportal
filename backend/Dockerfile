@@ -27,22 +27,7 @@ RUN set -eux; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
 
-RUN set -eux; \
-    apt-get update -o Acquire::Retries=5 ${APT_DEBUG}; \
-    apt-get install -y --no-install-recommends --fix-missing ${APT_DEBUG} \
-        libreoffice \
-        default-jre \
-        ocrmypdf \
-        tesseract-ocr \
-        tesseract-ocr-eng \
-        tesseract-ocr-rus \
-        poppler-utils; \
-    apt-get clean; \
-    rm -rf /var/lib/apt/lists/*
-
-RUN set -eux; \
-    mkdir -p /opt/tabula; \
-    curl ${CURL_OPTS} -L -o /opt/tabula/tabula.jar https://github.com/tabulapdf/tabula-java/releases/download/v1.0.5/tabula-1.0.5-jar-with-dependencies.jar
+ 
 
 FROM composer:2 AS composer-deps
 

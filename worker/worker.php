@@ -1,6 +1,11 @@
 <?php
 
-require __DIR__ . '/../backend/vendor/autoload.php';
+$autoload = __DIR__ . '/../backend/vendor/autoload.php';
+if (!file_exists($autoload)) {
+    fwrite(STDERR, "Missing vendor/autoload.php. Run composer install in /var/www/backend.\n");
+    exit(1);
+}
+require $autoload;
 
 use App\RedisClient;
 use App\Uploads;
