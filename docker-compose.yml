@@ -1,11 +1,50 @@
 version: "3.9"
 
 services:
-  wasportal:
-    build: .
+  nginx:
+    image: nginx:1.25-alpine
     ports:
-      - "8000:8000"
+      - "8080:80"
     volumes:
-      - .:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - .:/var/www/portal:ro
+      - ./frontend:/var/www/frontend:ro
+    depends_on:
+      - frontend-php
+      - backend
+
+  frontend-php:
+    image: php:8.2-fpm
+    volumes:
+      - ./frontend:/var/www/frontend:ro
+
+  backend:
+    build:
+      context: ./backend
     environment:
-      PHP_CLI_SERVER_WORKERS: 4
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ./backend/storage:/var/www/backend/storage
+    depends_on:
+      - redis
+
+  worker:
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ./backend/storage:/var/www/backend/storage
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
