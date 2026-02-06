@@ -1,6 +1,17 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+$autoloadPath = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoloadPath)) {
+    http_response_code(500);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(
+        ['error' => 'composer autoload missing', 'hint' => 'run composer install in backend'],
+        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+    );
+    exit;
+}
+
+require $autoloadPath;
 
 use App\RedisClient;
 use App\Response;

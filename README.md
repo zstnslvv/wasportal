@@ -17,13 +17,19 @@ http://localhost:8000/login.php
 
 ## Запуск через Docker Compose
 
-1. Соберите и запустите сервис:
+1. Установите зависимости backend (нужно для корректной работы API):
+
+```bash
+./backend/bin/install-deps.sh
+```
+
+2. Соберите и запустите сервис:
 
 ```bash
 docker compose up -d --build
 ```
 
-2. Откройте в браузере:
+3. Откройте в браузере:
 
 ```
 http://localhost:8000/login.php
@@ -52,7 +58,7 @@ docker compose up --build
 ## URL сервиса
 
 ```
-http://localhost:8080/converter/convert.php
+http://localhost:8080/convert.php
 ```
 
 ## API примеры
