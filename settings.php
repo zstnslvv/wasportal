@@ -12,6 +12,9 @@ if (!is_dir($uploadsDir)) {
     mkdir($uploadsDir, 0755, true);
 }
 
+$canWriteSettings = is_writable($settingsDir) || (file_exists($settingsPath) && is_writable($settingsPath));
+$canWriteUploads = is_writable($uploadsDir);
+
 $settings = [
     'portalTitle' => 'WAS Portal',
     'portalLogo' => null,
@@ -39,6 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $titleError = 'Длина названия: от 3 до 40 символов.';
         } elseif (!preg_match('/^[\\p{L}\\p{N}\\s_-]+$/u', $portalTitle)) {
             $titleError = 'Разрешены только буквы, цифры, пробелы, дефис и подчёркивание.';
+        } elseif (!$canWriteSettings) {
+            $titleError = 'Настройки недоступны для записи. Проверьте права на каталог data.';
         } else {
             $settings['portalTitle'] = $portalTitle;
             file_put_contents($settingsPath, json_encode($settings, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
@@ -49,6 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'logo') {
         if (!isset($_FILES['portalLogo']) || $_FILES['portalLogo']['error'] !== UPLOAD_ERR_OK) {
             $logoError = 'Загрузите файл логотипа.';
+        } elseif (!$canWriteUploads || !$canWriteSettings) {
+            $logoError = 'Загрузка недоступна: проверьте права на каталоги uploads и data.';
         } else {
             $file = $_FILES['portalLogo'];
             $allowed = ['png', 'jpg', 'jpeg', 'webp'];
