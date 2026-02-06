@@ -74,6 +74,10 @@ if (is_string($portalTitle) && $portalTitle !== '') {
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v4m0 12H7v-4m10-8-3-3m3 3-3 3M7 16l3 3m-3-3 3-3"/></svg>
                 <span>конвертация</span>
             </a>
+            <a class="nav-link<?php echo $activePage === 'cve-kpe' ? ' is-active' : ''; ?>" href="/cve-kpe.php" data-icon="cve-kpe">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v4H4zm0 6h16v10H4zM7 13h6m-6 4h10"/></svg>
+                <span>CVE КПЭ</span>
+            </a>
             <a class="nav-link<?php echo $activePage === 'passwords' ? ' is-active' : ''; ?>" href="/passwords.php" data-icon="passwords">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v9H6z"/></svg>
                 <span>пароли</span>
