@@ -1,9 +1,7 @@
-<div class="converter-page">
-    <section class="panel panel--wide converter-panel converter-intro">
-        <div class="converter-header">
-            <h2>Конвертация файлов</h2>
-            <p class="panel-note">LibreOffice, Tabula, OCRmyPDF+Tesseract, mPDF</p>
-        </div>
+<section class="grid converter-grid">
+    <div class="panel panel--wide converter-panel">
+        <h2>Конвертация файлов</h2>
+        <p class="panel-note">LibreOffice, Tabula, OCRmyPDF+Tesseract, mPDF</p>
         <div class="drop-zone" id="drop-zone">
             <p class="drop-title">Перетащите файлы сюда или выберите вручную</p>
             <input type="file" id="file-input" multiple>
@@ -12,9 +10,10 @@
             <button class="btn" id="upload-btn">Загрузить</button>
             <button class="btn primary" id="convert-btn">Конвертировать</button>
         </div>
-    </section>
+    </div>
 
-    <section class="panel panel--wide converter-panel file-list" id="file-list">
+    <div class="panel panel--wide converter-panel file-list" id="file-list">
+        <h2>Очередь файлов</h2>
         <div class="file-list__header">
             <span>Файл</span>
             <span>Размер</span>
@@ -24,12 +23,10 @@
             <span>Действия</span>
         </div>
         <div class="file-list__body" id="file-list-body"></div>
-    </section>
+    </div>
 
-    <section class="panel panel--wide converter-panel merge-section">
-        <div class="converter-header">
-            <h2>Собрать один PDF из изображений</h2>
-        </div>
+    <div class="panel panel--wide converter-panel merge-section">
+        <h2>Собрать один PDF из изображений</h2>
         <div class="merge-controls">
             <input type="file" id="merge-input" multiple accept="image/png,image/jpeg">
             <label class="checkbox">
@@ -39,7 +36,7 @@
             <button class="btn primary" id="merge-btn">Собрать PDF</button>
         </div>
         <div class="merge-status" id="merge-status"></div>
-    </section>
-</div>
+    </div>
+</section>
 
 <div class="toast" id="toast"></div>

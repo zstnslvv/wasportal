@@ -1,23 +1,11 @@
-.converter-page {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.converter-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .converter-panel {
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-.converter-header {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.converter-intro .panel-note {
-  margin-bottom: 0;
 }
 
 .drop-zone {
