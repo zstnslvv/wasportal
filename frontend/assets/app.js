@@ -8,6 +8,7 @@ const mergeInput = document.getElementById('merge-input');
 const mergeBtn = document.getElementById('merge-btn');
 const mergeStatus = document.getElementById('merge-status');
 const mergeSeparate = document.getElementById('merge-separate');
+const debugMode = new URLSearchParams(window.location.search).get('debug') !== '0';
 
 const MAX_FILES = 20;
 const MAX_TOTAL_SIZE = 200 * 1024 * 1024;
@@ -33,6 +34,37 @@ const showToast = (message) => {
   toast.textContent = message;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 3000);
+};
+
+const withDebugDetails = (message, details) => {
+  if (!debugMode) {
+    return message;
+  }
+  const trimmed = details?.trim();
+  if (!trimmed) {
+    return `${message} (ответ пустой)`;
+  }
+  return `${message} (ответ: ${trimmed})`;
+};
+
+const readJson = async (response) => {
+  const text = await response.text();
+  let data;
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch (error) {
+    const message = withDebugDetails('Некорректный JSON от сервера.', text);
+    if (debugMode) {
+      console.error('Invalid JSON response', { text, error });
+    }
+    throw new Error(message);
+  }
+
+  if (!response.ok) {
+    const errorMessage = typeof data.error === 'string' ? data.error : `HTTP ${response.status}`;
+    throw new Error(withDebugDetails(errorMessage, text));
+  }
+  return data;
 };
 
 const formatSize = (size) => {
@@ -175,10 +207,7 @@ const uploadFile = async (item) => {
     method: 'POST',
     body: formData
   });
-  if (!response.ok) {
-    throw new Error('Ошибка загрузки');
-  }
-  const data = await response.json();
+  const data = await readJson(response);
   item.fileId = data.file_id;
   item.status = 'загружен';
   item.progress = 20;
@@ -193,25 +222,28 @@ const convertFile = async (item) => {
       target_format: item.target
     })
   });
-  if (!response.ok) {
-    throw new Error('Ошибка конвертации');
-  }
-  const data = await response.json();
+  const data = await readJson(response);
   item.jobId = data.job_id;
   item.status = 'в очереди';
 };
 
 const pollJob = async (item) => {
   if (!item.jobId) return;
-  const response = await fetch(`/api/job/${item.jobId}`);
-  if (!response.ok) {
-    return;
-  }
-  const data = await response.json();
-  item.status = data.status || item.status;
-  item.progress = data.progress ?? item.progress;
-  if (data.download_url) {
-    item.downloadUrl = data.download_url;
+  try {
+    const response = await fetch(`/api/job/${item.jobId}`);
+    if (!response.ok) {
+      return;
+    }
+    const data = await readJson(response);
+    item.status = data.status || item.status;
+    item.progress = data.progress ?? item.progress;
+    if (data.download_url) {
+      item.downloadUrl = data.download_url;
+    }
+  } catch (error) {
+    if (debugMode) {
+      showToast(error.message);
+    }
   }
 };
 
@@ -281,10 +313,7 @@ mergeBtn.addEventListener('click', async () => {
       method: 'POST',
       body: formData
     });
-    if (!response.ok) {
-      throw new Error('Ошибка сборки');
-    }
-    const data = await response.json();
+    const data = await readJson(response);
     mergeStatus.textContent = 'Задача запущена, ожидайте...';
     await pollMergeJob(data.job_id);
   } catch (error) {
@@ -295,24 +324,30 @@ mergeBtn.addEventListener('click', async () => {
 
 const pollMergeJob = async (jobId) => {
   const interval = setInterval(async () => {
-    const response = await fetch(`/api/job/${jobId}`);
-    if (!response.ok) {
-      return;
-    }
-    const data = await response.json();
-    mergeStatus.textContent = `Статус: ${data.status} (${data.progress}%)`;
-    if (data.status === 'done' && data.download_url) {
-      clearInterval(interval);
-      const link = document.createElement('a');
-      link.href = data.download_url;
-      link.textContent = 'Скачать PDF';
-      link.className = 'download-link';
-      mergeStatus.textContent = '';
-      mergeStatus.appendChild(link);
-    }
-    if (data.status === 'error') {
-      clearInterval(interval);
-      mergeStatus.textContent = data.error_message || 'Ошибка.';
+    try {
+      const response = await fetch(`/api/job/${jobId}`);
+      if (!response.ok) {
+        return;
+      }
+      const data = await readJson(response);
+      mergeStatus.textContent = `Статус: ${data.status} (${data.progress}%)`;
+      if (data.status === 'done' && data.download_url) {
+        clearInterval(interval);
+        const link = document.createElement('a');
+        link.href = data.download_url;
+        link.textContent = 'Скачать PDF';
+        link.className = 'download-link';
+        mergeStatus.textContent = '';
+        mergeStatus.appendChild(link);
+      }
+      if (data.status === 'error') {
+        clearInterval(interval);
+        mergeStatus.textContent = data.error_message || 'Ошибка.';
+      }
+    } catch (error) {
+      if (debugMode) {
+        showToast(error.message);
+      }
     }
   }, 2000);
 };
