@@ -39,6 +39,11 @@ if (is_string($portalTitle) && $portalTitle !== '') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($pageTitle, ENT_QUOTES); ?></title>
     <link rel="stylesheet" href="/assets/styles.css">
+    <?php if (!empty($extraStyles) && is_array($extraStyles)): ?>
+        <?php foreach ($extraStyles as $stylePath): ?>
+            <link rel="stylesheet" href="<?php echo htmlspecialchars($stylePath, ENT_QUOTES); ?>">
+        <?php endforeach; ?>
+    <?php endif; ?>
 </head>
 <body>
 <div class="app-shell">
