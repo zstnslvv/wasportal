@@ -34,6 +34,7 @@ FROM composer:2 AS composer-deps
 ENV COMPOSER_DISABLE_TLS=1
 ENV COMPOSER_SECURE_HTTP=0
 ENV COMPOSER_PROCESS_TIMEOUT=600
+ENV COMPOSER_REPO_PACKAGIST="http://repo.packagist.org"
 ENV COMPOSER_CURL_OPTIONS='{"ssl_verify_peer":false,"ssl_verify_host":false,"timeout":300}'
 RUN apk add --no-cache ca-certificates git unzip \
     && update-ca-certificates
@@ -42,8 +43,7 @@ WORKDIR /app
 COPY composer.json composer.lock* ./
 RUN composer config --global secure-http false \
     && composer config --global disable-tls true \
-    && composer install --no-dev --prefer-dist --no-interaction --no-progress || true
-RUN mkdir -p /app/vendor
+    && composer install --no-dev --prefer-dist --no-interaction --no-progress
 
 FROM backend-base AS backend-runtime-host
 
